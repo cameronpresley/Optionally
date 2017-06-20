@@ -15,11 +15,5 @@ namespace Optionally
             }
             return Option<T>.None();
         }
-
-        public static Option<T> TryHead<T>(this IEnumerable<T> enumerable, Func<T, bool> filter)
-        {
-            if (enumerable == null) return Option<T>.None();
-            return enumerable.Where(filter).TryHead();
-        }
     }
 }
