@@ -32,5 +32,17 @@ namespace Optionally
         {
             return _hasValue ? chain(_value) : new Option<U>(default(U), false);
         }
+
+        public void Do(Action<T> ifSome, Action ifNone)
+        {
+            if (_hasValue)
+            {
+                ifSome(_value);
+            }
+            else
+            {
+                ifNone();
+            }
+        }
     }
 }
