@@ -27,13 +27,13 @@ namespace Optionally
         public Result<V, U> Map<V>(Func<T, V> mapper)
         {
             return _didSucceed
-                ? new Result<V,U>(mapper(_success), default(U), true)
-                : new Result<V,U>(default(V), _failure, false);
+                ? Result<V,U>.Success(mapper(_success))
+                : Result<V,U>.Failure(_failure);
         }
 
         public Result<V, U> AndThen<V>(Func<T, Result<V, U>> chain)
         {
-            return _didSucceed ? chain(_success) : new Result<V, U>(default(V), _failure, false);
+            return _didSucceed ? chain(_success) : Result<V, U>.Failure(_failure);
         }
 
         public void Do(Action<T> onSuccess, Action<U> onFailure)

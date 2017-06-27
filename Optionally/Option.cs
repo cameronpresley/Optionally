@@ -25,12 +25,16 @@ namespace Optionally
 
         public Option<U> Map<U>(Func<T, U> mapper)
         {
-            return _hasValue ? new Option<U>(mapper(_value), true) : new Option<U>(default(U), false);
+            return _hasValue 
+                ? Option<U>.Some(mapper(_value))
+                : Option<U>.None();
         }
 
         public Option<U> AndThen<U>(Func<T, Option<U>> chain)
         {
-            return _hasValue ? chain(_value) : new Option<U>(default(U), false);
+            return _hasValue 
+                ? chain(_value) 
+                : Option<U>.None();
         }
 
         public void Do(Action<T> ifSome, Action ifNone)
