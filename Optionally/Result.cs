@@ -33,9 +33,10 @@ namespace Optionally
                 : Result<V, U>.Failure(_failure);
         }
 
-        public Result<V, U> AndThen<V>(Func<T, Result<V, U>> chain)
+        public Result<V, U> AndThen<V>(Func<T, Result<V, U>> binder)
         {
-            return _didSucceed ? chain(_success) : Result<V, U>.Failure(_failure);
+            if (binder == null) throw new ArgumentNullException(nameof(binder));
+            return _didSucceed ? binder(_success) : Result<V, U>.Failure(_failure);
         }
 
         public void Do(Action<T> onSuccess, Action<U> onFailure)
