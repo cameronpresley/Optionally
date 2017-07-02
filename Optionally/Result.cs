@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Optionally
 {
@@ -45,6 +46,21 @@ namespace Optionally
                 onSuccess(_success);
             else if (!_didSucceed && onFailure != null)
                 onFailure(_failure);
+        }
+
+        public static Result<T, List<U>> Apply<T1, T2>(Func<T1, T2, T> func, Result<T1, U> first, Result<T2, U> second)
+        {
+            if (func == null) throw new ArgumentNullException(nameof(func));
+            if (first == null) throw new ArgumentNullException(nameof(first));
+            if (second == null) throw new ArgumentNullException(nameof(second));
+
+            if (first._didSucceed && second._didSucceed)
+                return Result<T, List<U>>.Success(func(first._success, second._success));
+
+            var errors = new List<U>();
+            if (!first._didSucceed) errors.Add(first._failure);
+            if (!second._didSucceed) errors.Add(second._failure);
+            return Result<T, List<U>>.Failure(errors);
         }
 
         #region Equal/HashCode overrides
