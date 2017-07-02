@@ -27,8 +27,8 @@ namespace Optionally
         public Result<V, U> Map<V>(Func<T, V> mapper)
         {
             return _didSucceed
-                ? Result<V,U>.Success(mapper(_success))
-                : Result<V,U>.Failure(_failure);
+                ? Result<V, U>.Success(mapper(_success))
+                : Result<V, U>.Failure(_failure);
         }
 
         public Result<V, U> AndThen<V>(Func<T, Result<V, U>> chain)
@@ -43,5 +43,22 @@ namespace Optionally
             else
                 onFailure(_failure);
         }
+
+        #region Equal/HashCode overrides
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return false;
+            if (obj as Result<T, U> == null) return false;
+            return Equals(obj as Result<T, U>);
+        }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+        private bool Equals(Result<T, U> other)
+        {
+            return other._didSucceed == _didSucceed && Equals(_success, other._success) && Equals(_failure, other._failure);
+        }
+        #endregion
     }
 }
