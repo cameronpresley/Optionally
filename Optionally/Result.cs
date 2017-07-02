@@ -24,7 +24,7 @@ namespace Optionally
         {
             return new Result<T, U>(default(T), value, false);
         }
-        
+
         public Result<V, U> Map<V>(Func<T, V> mapper)
         {
             if (mapper == null) throw new ArgumentNullException(nameof(mapper));
@@ -41,9 +41,9 @@ namespace Optionally
 
         public void Do(Action<T> onSuccess, Action<U> onFailure)
         {
-            if (_didSucceed)
+            if (_didSucceed && onSuccess != null)
                 onSuccess(_success);
-            else
+            else if (!_didSucceed && onFailure != null)
                 onFailure(_failure);
         }
 
