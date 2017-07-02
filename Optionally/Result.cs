@@ -24,8 +24,10 @@ namespace Optionally
         {
             return new Result<T, U>(default(T), value, false);
         }
+        
         public Result<V, U> Map<V>(Func<T, V> mapper)
         {
+            if (mapper == null) throw new ArgumentNullException(nameof(mapper));
             return _didSucceed
                 ? Result<V, U>.Success(mapper(_success))
                 : Result<V, U>.Failure(_failure);

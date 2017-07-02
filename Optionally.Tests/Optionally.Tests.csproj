@@ -54,6 +54,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResultTests\WhenConstructingFailure.cs" />
     <Compile Include="ResultTests\WhenConstructingSuccess.cs" />
+    <Compile Include="ResultTests\WhenMapping.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
