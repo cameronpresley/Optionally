@@ -52,6 +52,7 @@
     <Compile Include="OptionTests\WhenMapping.cs" />
     <Compile Include="OptionTests\WhenPerformingAnAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResultTests\WhenConstructingFailure.cs" />
     <Compile Include="ResultTests\WhenConstructingSuccess.cs" />
   </ItemGroup>
   <ItemGroup>
