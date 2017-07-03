@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Optionally
 {
@@ -136,22 +137,26 @@ namespace Optionally
         }
 
         #region Equals/Hashcode Overrides
+
         public override bool Equals(object obj)
         {
-            if (obj == null) return false;
-            if (obj as Option<T> == null) return false;
-            return Equals((Option<T>)obj);
+            if (!(obj is Option<T>)) return false;
+            return Equals((Option<T>) obj);
         }
 
-        private bool Equals(Option<T> obj)
+        protected bool Equals(Option<T> other)
         {
-            return obj._hasValue == _hasValue && Equals(obj._value, _value);
+            return EqualityComparer<T>.Default.Equals(_value, other._value) && _hasValue == other._hasValue;
         }
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            unchecked
+            {
+                return (EqualityComparer<T>.Default.GetHashCode(_value) * 397) ^ _hasValue.GetHashCode();
+            }
         }
+
         #endregion
     }
 }

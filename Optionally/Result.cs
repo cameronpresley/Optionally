@@ -140,20 +140,29 @@ namespace Optionally
         }
 
         #region Equal/HashCode overrides
+
         public override bool Equals(object obj)
         {
-            if (obj == null) return false;
-            if (obj as Result<T, U> == null) return false;
-            return Equals(obj as Result<T, U>);
+            if (!(obj is Result<T, U>)) return false;
+            return Equals((Result<T, U>)obj);
         }
+
+        protected bool Equals(Result<T, U> other)
+        {
+            return EqualityComparer<T>.Default.Equals(_success, other._success) && EqualityComparer<U>.Default.Equals(_failure, other._failure) && _didSucceed == other._didSucceed;
+        }
+
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            unchecked
+            {
+                var hashCode = EqualityComparer<T>.Default.GetHashCode(_success);
+                hashCode = (hashCode * 397) ^ EqualityComparer<U>.Default.GetHashCode(_failure);
+                hashCode = (hashCode * 397) ^ _didSucceed.GetHashCode();
+                return hashCode;
+            }
         }
-        private bool Equals(Result<T, U> other)
-        {
-            return other._didSucceed == _didSucceed && Equals(_success, other._success) && Equals(_failure, other._failure);
-        }
+
         #endregion
     }
 }

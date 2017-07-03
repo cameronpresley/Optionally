@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using System;
 
 namespace Optionally.Tests.NullableExtensionTests
 {
@@ -9,7 +8,7 @@ namespace Optionally.Tests.NullableExtensionTests
         [Test]
         public void AndTheNullableIsNullThenNoneIsReturned()
         {
-            var input = new Nullable<int>();
+            var input = new int?();
 
             var observed = input.ToOption();
 
@@ -20,7 +19,7 @@ namespace Optionally.Tests.NullableExtensionTests
         [Test]
         public void AndTheNullableHasAValueThenSomeIsReturned()
         {
-            var input = new Nullable<int>(2);
+            var input = new int?(2);
 
             var observed = input.ToOption();
 
@@ -31,7 +30,7 @@ namespace Optionally.Tests.NullableExtensionTests
         [Test]
         public void AndTheInputIsNullThenNoneIsReturned()
         {
-            var input = (Nullable<int>)null;
+            var input = (int?)null;
 
             var observed = input.ToOption();
 

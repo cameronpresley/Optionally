@@ -28,7 +28,7 @@ namespace Optionally.Tests.ResultTests
                 return Result<string, Exception>.Success(number.ToString());
             };
 
-            var observed = Result<int, Exception>.Failure(new Exception()).AndThen(binder);
+            Result<int, Exception>.Failure(new Exception()).AndThen(binder);
 
             Assert.That(!wasBinderCalled);
         }
@@ -37,13 +37,13 @@ namespace Optionally.Tests.ResultTests
         public void AndResultIsSuccessThenBinderIsCalled()
         {
             var wasBinderCalled = false;
-            Func<int, Result<string, Exception>> binder = delegate (int number)
+            Func<int, Result<string, Exception>> binder = delegate
             {
                 wasBinderCalled = true;
                 return Result<string, Exception>.Failure(new Exception());
             };
 
-            var observed = Result<int, Exception>.Success(2).AndThen(binder);
+            Result<int, Exception>.Success(2).AndThen(binder);
 
             Assert.That(wasBinderCalled);
         }

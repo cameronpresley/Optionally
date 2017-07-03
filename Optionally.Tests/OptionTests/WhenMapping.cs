@@ -20,7 +20,7 @@ namespace Optionally.Tests.OptionTests
         public void AndTheOptionIsNoneThenMapIsntCalled()
         {
             var mapperWasCalled = false;
-            var observed = Option<int>.None().Map(delegate (int x)
+            Option<int>.None().Map(delegate (int x)
             {
                 mapperWasCalled = true;
                 return x + 2;

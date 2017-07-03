@@ -11,7 +11,6 @@
         public static Option<T> ToOption<T>(this T? nullable) where T : struct
         {
             if (nullable == null) return Option<T>.None();
-            if (!nullable.HasValue) return Option<T>.None();
             return Option<T>.Some(nullable.Value);
         }
     }
