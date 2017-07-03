@@ -63,6 +63,24 @@ namespace Optionally
             return Result<T, List<U>>.Failure(errors);
         }
 
+        public static Result<T, List<U>> Apply<T1, T2, T3>(Func<T1, T2, T3, T> func, Result<T1, U> first, Result<T2, U> second, Result<T3, U> third)
+        {
+            if (func == null) throw new ArgumentNullException(nameof(func));
+            if (first == null) throw new ArgumentNullException(nameof(first));
+            if (second == null) throw new ArgumentNullException(nameof(second));
+            if (third == null) throw new ArgumentNullException(nameof(third));
+
+            if (first._didSucceed && second._didSucceed && third._didSucceed)
+                return Result<T, List<U>>.Success(func(first._success, second._success, third._success));
+
+            var errors = new List<U>();
+            if (!first._didSucceed) errors.Add(first._failure);
+            if (!second._didSucceed) errors.Add(second._failure);
+            if (!third._didSucceed) errors.Add(third._failure);
+
+            return Result<T, List<U>>.Failure(errors);
+        }
+
         #region Equal/HashCode overrides
         public override bool Equals(object obj)
         {
