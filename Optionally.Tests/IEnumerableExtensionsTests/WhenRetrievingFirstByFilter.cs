@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using System.Collections.Generic;
 
-namespace Optionally.Tests.IEnumerableExtensionTests
+namespace Optionally.Tests.IEnumerableExtensionsTests
 {
     [TestFixture]
     class WhenRetrievingFirstByFilter
