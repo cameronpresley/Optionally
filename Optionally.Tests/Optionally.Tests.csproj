@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IEnumerableExtensionTests\WhenRetrievingFirst.cs" />
     <Compile Include="OptionTests\WhenApplyingThreeOptions.cs" />
     <Compile Include="OptionTests\WhenApplyingTwoOptions.cs" />
     <Compile Include="OptionTests\WhenBinding.cs" />
