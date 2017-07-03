@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="IEnumerableExtensionTests\WhenRetrievingFirst.cs" />
     <Compile Include="IEnumerableExtensionTests\WhenRetrievingFirstByFilter.cs" />
+    <Compile Include="NullableExtensionTests\WhenConvertingANullableToAnOption.cs" />
     <Compile Include="OptionTests\WhenApplyingThreeOptions.cs" />
     <Compile Include="OptionTests\WhenApplyingTwoOptions.cs" />
     <Compile Include="OptionTests\WhenBinding.cs" />
