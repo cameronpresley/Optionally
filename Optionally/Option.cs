@@ -7,11 +7,11 @@ namespace Optionally
     /// Represents whether a value exists or not
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class Option<T>
+    public struct Option<T>
     {
         private readonly T _value;
         private readonly bool _hasValue;
-
+        
         private Option(T value, bool hasValue)
         {
             _value = value;
@@ -26,7 +26,7 @@ namespace Optionally
         /// <returns></returns>
         public static Option<T> Some(T value)
         {
-            return new Option<T>(value, true);
+            return value == null ? None() : new Option<T>(value, true);
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Optionally
         /// <remarks>Provides an applicative style for data validation</remarks>
         public static Option<T> Apply<T1, T2>(Func<T1, T2, T> func, Option<T1> first, Option<T2> second)
         {
-            if (func == null || first == null || second == null) return None();
+            if (func == null) return None();
 
             if (first._hasValue && second._hasValue)
                 return Some(func(first._value, second._value));
@@ -130,33 +130,10 @@ namespace Optionally
         /// <remarks>Provides an applicative style for data validation</remarks>
         public static Option<T> Apply<T1, T2, T3>(Func<T1, T2, T3, T> func, Option<T1> first, Option<T2> second, Option<T3> third)
         {
-            if (func == null || first == null || second == null || third == null) return None();
+            if (func == null) return None();
             if (first._hasValue && second._hasValue && third._hasValue)
                 return Some(func(first._value, second._value, third._value));
             return None();
         }
-
-        #region Equals/Hashcode Overrides
-
-        public override bool Equals(object obj)
-        {
-            if (!(obj is Option<T>)) return false;
-            return Equals((Option<T>) obj);
-        }
-
-        protected bool Equals(Option<T> other)
-        {
-            return EqualityComparer<T>.Default.Equals(_value, other._value) && _hasValue == other._hasValue;
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                return (EqualityComparer<T>.Default.GetHashCode(_value) * 397) ^ _hasValue.GetHashCode();
-            }
-        }
-
-        #endregion
     }
 }

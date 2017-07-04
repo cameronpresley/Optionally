@@ -16,24 +16,6 @@ namespace Optionally.Tests.ResultTests
         }
 
         [Test]
-        public void AndTheFirstResultIsNullThenAnExceptionIsThrown()
-        {
-            var second = CreateSuccess(2);
-            Func<int, int, int> add = (a, b) => a + b;
-
-            Assert.Throws<ArgumentNullException>(() => Result<int, Exception>.Apply(add, null, second));
-        }
-
-        [Test]
-        public void AndTheSecondResultIsNullThenAnExceptionIsThrown()
-        {
-            var first = CreateSuccess(2);
-            Func<int, int, int> add = (a, b) => a + b;
-
-            Assert.Throws<ArgumentNullException>(() => Result<int, Exception>.Apply(add, first, null));
-        }
-
-        [Test]
         public void AndTheFirstResultIsAFailureThenFailureIsReturned()
         {
             var exception = new Exception();

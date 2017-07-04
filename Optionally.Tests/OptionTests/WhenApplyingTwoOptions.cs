@@ -46,30 +46,6 @@ namespace Optionally.Tests.OptionTests
         }
 
         [Test]
-        public void AndTheFirstOptionIsNullThenNoneIsReturned()
-        {
-            var second = Option<int>.Some(2);
-            Func<int, int, int> add = (a, b) => a + b;
-
-            var observed = Option<int>.Apply(add, null, second);
-
-            var expected = Option<int>.None();
-            Assert.AreEqual(expected, observed);
-        }
-
-        [Test]
-        public void AndTheSecondOptionIsNullThenNoenIsReturned()
-        {
-            var first = Option<int>.Some(2);
-            Func<int, int, int> add = (a, b) => a + b;
-
-            var observed = Option<int>.Apply(add, first, null);
-
-            var expected = Option<int>.None();
-            Assert.AreEqual(expected, observed);
-        }
-
-        [Test]
         public void AndTheFunctionIsNullThenNoneIsReturned()
         {
             var first = Option<int>.Some(2);
