@@ -9,13 +9,13 @@ namespace Optionally.Tests.OptionTests
         [Test]
         public void AndTheFirstOptionIsNoneThenNoneIsReturned()
         {
-            var first = Option<int>.None();
+            var first = Option<int>.None;
             var second = Option<int>.Some(2);
             Func<int, int, int> add = (a, b) => a + b;
 
             var observed = Option<int>.Apply(add, first, second);
 
-            var expected = Option<int>.None();
+            var expected = Option<int>.None;
             Assert.AreEqual(expected, observed);
         }
 
@@ -23,12 +23,12 @@ namespace Optionally.Tests.OptionTests
         public void AndTheSecondOptionIsNoneThenNoneIsReturned()
         {
             var first = Option<int>.Some(2);
-            var second = Option<int>.None();
+            var second = Option<int>.None;
             Func<int, int, int> add = (a, b) => a + b;
 
             var observed = Option<int>.Apply(add, first, second);
 
-            var expected = Option<int>.None();
+            var expected = Option<int>.None;
             Assert.AreEqual(expected, observed);
         }
 
@@ -53,7 +53,7 @@ namespace Optionally.Tests.OptionTests
 
             var observed = Option<int>.Apply(null, first, second);
 
-            var expected = Option<int>.None();
+            var expected = Option<int>.None;
             Assert.AreEqual(expected, observed);
         }
     }

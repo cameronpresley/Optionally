@@ -9,9 +9,9 @@ namespace Optionally.Tests.OptionTests
         [Test]
         public void AndTheOptionIsNoneThenNoneIsReturned()
         {
-            var observed = Option<int>.None().Map(x => x + 2);
+            var observed = Option<int>.None.Map(x => x + 2);
 
-            var expected = Option<int>.None();
+            var expected = Option<int>.None;
 
             Assert.AreEqual(expected, observed);
         }
@@ -20,7 +20,7 @@ namespace Optionally.Tests.OptionTests
         public void AndTheOptionIsNoneThenMapIsntCalled()
         {
             var mapperWasCalled = false;
-            Option<int>.None().Map(delegate (int x)
+            Option<int>.None.Map(delegate (int x)
             {
                 mapperWasCalled = true;
                 return x + 2;
@@ -46,7 +46,7 @@ namespace Optionally.Tests.OptionTests
         {
             var observed = Option<int>.Some(2).Map<string>(null);
 
-            var expected = Option<string>.None();
+            var expected = Option<string>.None;
             Assert.AreEqual(expected, observed);
         }
     }

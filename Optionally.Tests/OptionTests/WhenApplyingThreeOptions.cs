@@ -9,14 +9,14 @@ namespace Optionally.Tests.OptionTests
         [Test]
         public void AndTheFirstOptionIsNoneThenNoneIsReturned()
         {
-            var first = Option<int>.None();
+            var first = Option<int>.None;
             var second = Option<int>.Some(2);
             var third = Option<int>.Some(4);
             Func<int, int, int, int> add = (a, b, c) => a + b + c;
 
             var observed = Option<int>.Apply(add, first, second, third);
 
-            var expected = Option<int>.None();
+            var expected = Option<int>.None;
             Assert.AreEqual(expected, observed);
         }
 
@@ -24,13 +24,13 @@ namespace Optionally.Tests.OptionTests
         public void AndTheSecondOptionIsNoneThenNoneIsReturned()
         {
             var first = Option<int>.Some(2);
-            var second = Option<int>.None();
+            var second = Option<int>.None;
             var third = Option<int>.Some(4);
             Func<int, int, int, int> add = (a, b, c) => a + b + c;
 
             var observed = Option<int>.Apply(add, first, second, third);
 
-            var expected = Option<int>.None();
+            var expected = Option<int>.None;
             Assert.AreEqual(expected, observed);
         }
 
@@ -39,12 +39,12 @@ namespace Optionally.Tests.OptionTests
         {
             var first = Option<int>.Some(2);
             var second = Option<int>.Some(4);
-            var third = Option<int>.None();
+            var third = Option<int>.None;
             Func<int, int, int, int> add = (a, b, c) => a + b + c;
 
             var observed = Option<int>.Apply(add, first, second, third);
 
-            var expected = Option<int>.None();
+            var expected = Option<int>.None;
             Assert.AreEqual(expected, observed);
         }
 
@@ -71,7 +71,7 @@ namespace Optionally.Tests.OptionTests
 
             var observed = Option<int>.Apply(null, first, second, third);
 
-            var expected = Option<int>.None();
+            var expected = Option<int>.None;
             Assert.AreEqual(expected, observed);
         }
     }

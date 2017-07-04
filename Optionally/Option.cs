@@ -18,6 +18,8 @@ namespace Optionally
             _hasValue = hasValue;
         }
 
+        public static readonly Option<T> None = new Option<T>(default(T), false); 
+
         /// <summary>
         /// Factory method that creates an Option with a value inside
         /// </summary>
@@ -26,17 +28,13 @@ namespace Optionally
         /// <returns></returns>
         public static Option<T> Some(T value)
         {
-            return value == null ? None() : new Option<T>(value, true);
+            return value == null ? None : new Option<T>(value, true);
         }
 
         /// <summary>
         /// Factory method that creates an Option without a value
         /// </summary>
         /// <returns></returns>
-        public static Option<T> None()
-        {
-            return new Option<T>(default(T), false);
-        }
 
         /// <summary>
         /// Convert the current Option to a different Option
@@ -47,10 +45,10 @@ namespace Optionally
         /// <remarks>Similiar to Select from LINQ</remarks>
         public Option<U> Map<U>(Func<T, U> mapper)
         {
-            if (mapper == null) return Option<U>.None();
+            if (mapper == null) return Option<U>.None;
             return _hasValue
                 ? Option<U>.Some(mapper(_value))
-                : Option<U>.None();
+                : Option<U>.None;
         }
 
         /// <summary>
@@ -62,10 +60,10 @@ namespace Optionally
         /// <remarks>Provides a monadic approach to data validation</remarks>
         public Option<U> AndThen<U>(Func<T, Option<U>> binder)
         {
-            if (binder == null) return Option<U>.None();
+            if (binder == null) return Option<U>.None;
             return _hasValue
                 ? binder(_value)
-                : Option<U>.None();
+                : Option<U>.None;
         }
 
         /// <summary>
@@ -92,9 +90,9 @@ namespace Optionally
         /// <returns>If Option is Some and the value fulfills the filter, then Some. Otherwise None</returns>
         public Option<T> Where(Func<T, bool> filter)
         {
-            if (filter == null) return None();
+            if (filter == null) return None;
             if (_hasValue && filter(_value)) return Some(_value);
-            return None();
+            return None;
         }
 
         /// <summary>
@@ -109,11 +107,11 @@ namespace Optionally
         /// <remarks>Provides an applicative style for data validation</remarks>
         public static Option<T> Apply<T1, T2>(Func<T1, T2, T> func, Option<T1> first, Option<T2> second)
         {
-            if (func == null) return None();
+            if (func == null) return None;
 
             if (first._hasValue && second._hasValue)
                 return Some(func(first._value, second._value));
-            return None();
+            return None;
         }
 
         /// <summary>
@@ -130,10 +128,10 @@ namespace Optionally
         /// <remarks>Provides an applicative style for data validation</remarks>
         public static Option<T> Apply<T1, T2, T3>(Func<T1, T2, T3, T> func, Option<T1> first, Option<T2> second, Option<T3> third)
         {
-            if (func == null) return None();
+            if (func == null) return None;
             if (first._hasValue && second._hasValue && third._hasValue)
                 return Some(func(first._value, second._value, third._value));
-            return None();
+            return None;
         }
     }
 }

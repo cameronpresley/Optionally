@@ -10,7 +10,7 @@
         /// <returns>If nullable is null or has no value, then None. Otherwise Some</returns>
         public static Option<T> ToOption<T>(this T? nullable) where T : struct
         {
-            if (nullable == null) return Option<T>.None();
+            if (nullable == null) return Option<T>.None;
             return Option<T>.Some(nullable.Value);
         }
     }
