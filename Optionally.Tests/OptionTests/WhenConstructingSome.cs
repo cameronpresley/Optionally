@@ -6,12 +6,12 @@ namespace Optionally.Tests.OptionTests
     public class WhenConstructingSome
     {
         [Test]
-        public void AndTheValueIsNullThenSomeIsConstructed()
+        public void AndTheValueIsNullThenNoneIsConstructed()
         {
             object input = null;
             var observed = Option<object>.Some(input);
 
-            var expected = Option<object>.Some(null);
+            var expected = Option<object>.None();
             Assert.AreEqual(expected, observed);
         }
 

@@ -8,7 +8,7 @@ namespace Optionally
     /// </summary>
     /// <typeparam name="T">Type of success</typeparam>
     /// <typeparam name="U">Type of failure</typeparam>
-    public class Result<T, U>
+    public struct Result<T, U>
     {
         private readonly T _success;
         private readonly U _failure;
@@ -97,8 +97,6 @@ namespace Optionally
         public static Result<T, List<U>> Apply<T1, T2>(Func<T1, T2, T> func, Result<T1, U> first, Result<T2, U> second)
         {
             if (func == null) throw new ArgumentNullException(nameof(func));
-            if (first == null) throw new ArgumentNullException(nameof(first));
-            if (second == null) throw new ArgumentNullException(nameof(second));
 
             if (first._didSucceed && second._didSucceed)
                 return Result<T, List<U>>.Success(func(first._success, second._success));
@@ -124,9 +122,6 @@ namespace Optionally
         public static Result<T, List<U>> Apply<T1, T2, T3>(Func<T1, T2, T3, T> func, Result<T1, U> first, Result<T2, U> second, Result<T3, U> third)
         {
             if (func == null) throw new ArgumentNullException(nameof(func));
-            if (first == null) throw new ArgumentNullException(nameof(first));
-            if (second == null) throw new ArgumentNullException(nameof(second));
-            if (third == null) throw new ArgumentNullException(nameof(third));
 
             if (first._didSucceed && second._didSucceed && third._didSucceed)
                 return Result<T, List<U>>.Success(func(first._success, second._success, third._success));
@@ -138,31 +133,5 @@ namespace Optionally
 
             return Result<T, List<U>>.Failure(errors);
         }
-
-        #region Equal/HashCode overrides
-
-        public override bool Equals(object obj)
-        {
-            if (!(obj is Result<T, U>)) return false;
-            return Equals((Result<T, U>)obj);
-        }
-
-        protected bool Equals(Result<T, U> other)
-        {
-            return EqualityComparer<T>.Default.Equals(_success, other._success) && EqualityComparer<U>.Default.Equals(_failure, other._failure) && _didSucceed == other._didSucceed;
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                var hashCode = EqualityComparer<T>.Default.GetHashCode(_success);
-                hashCode = (hashCode * 397) ^ EqualityComparer<U>.Default.GetHashCode(_failure);
-                hashCode = (hashCode * 397) ^ _didSucceed.GetHashCode();
-                return hashCode;
-            }
-        }
-
-        #endregion
     }
 }
