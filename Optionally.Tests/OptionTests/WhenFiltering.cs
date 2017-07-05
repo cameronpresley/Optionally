@@ -8,9 +8,9 @@ namespace Optionally.Tests.OptionTests
         [Test]
         public void AndNoneThenNoneIsReturned()
         {
-            var observed = Option<int>.None().Where(_ => true);
+            var observed = Option<int>.None.Where(_ => true);
 
-            var expected = Option<int>.None();
+            var expected = Option<int>.None;
             Assert.AreEqual(expected, observed);
         }
 
@@ -28,7 +28,7 @@ namespace Optionally.Tests.OptionTests
         {
             var observed = Option<int>.Some(2).Where(_ => false);
 
-            var expected = Option<int>.None();
+            var expected = Option<int>.None;
             Assert.AreEqual(expected, observed);
         }
 
@@ -37,7 +37,7 @@ namespace Optionally.Tests.OptionTests
         {
             var observed = Option<int>.Some(2).Where(null);
 
-            var expected = Option<int>.None();
+            var expected = Option<int>.None;
             Assert.AreEqual(expected, observed);
         }
     }

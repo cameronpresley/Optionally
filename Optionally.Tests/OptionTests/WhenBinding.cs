@@ -9,9 +9,9 @@ namespace Optionally.Tests.OptionTests
         [Test]
         public void AndOptionIsNoneThenNoneIsReturned()
         {
-            var result = Option<int>.None().AndThen(i => Option<string>.Some(i.ToString()));
+            var result = Option<int>.None.AndThen(i => Option<string>.Some(i.ToString()));
 
-            var expected = Option<string>.None();
+            var expected = Option<string>.None;
             Assert.AreEqual(expected, result);
         }
 
@@ -22,7 +22,7 @@ namespace Optionally.Tests.OptionTests
             Func<int, Option<string>> binder = delegate (int i)
             {
                 binderWasCalled = true;
-                return Option<string>.None();
+                return Option<string>.None;
             };
 
             Option<int>.Some(4).AndThen(binder);
@@ -35,7 +35,7 @@ namespace Optionally.Tests.OptionTests
         {
             var result = Option<int>.Some(4).AndThen<string>(null);
 
-            var expected = Option<string>.None();
+            var expected = Option<string>.None;
             Assert.AreEqual(expected, result);
         }
     }

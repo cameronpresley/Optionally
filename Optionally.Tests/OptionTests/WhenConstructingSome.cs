@@ -11,7 +11,7 @@ namespace Optionally.Tests.OptionTests
             object input = null;
             var observed = Option<object>.Some(input);
 
-            var expected = Option<object>.None();
+            var expected = Option<object>.None;
             Assert.AreEqual(expected, observed);
         }
 
