@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Optionally
 {
@@ -46,28 +45,28 @@ namespace Optionally
         /// <summary>
         /// Converts a Success Result to another Success Result
         /// </summary>
-        /// <typeparam name="V">Type of the new Success</typeparam>
+        /// <typeparam name="U">Type of the new Success</typeparam>
         /// <param name="mapper">How to convert the Success value</param>
         /// <returns>If Result is a Success, then Success is returned. Otherwise a Failure is returned</returns>
-        public Result<V, TFailure> Map<V>(Func<TSuccess, V> mapper)
+        public Result<U, TFailure> Map<U>(Func<TSuccess, U> mapper)
         {
             if (mapper == null) throw new ArgumentNullException(nameof(mapper));
             return DidSucceed
-                ? Result<V, TFailure>.Success(mapper(SuccessValue))
-                : Result<V, TFailure>.Failure(FailureValue);
+                ? Result<U, TFailure>.Success(mapper(SuccessValue))
+                : Result<U, TFailure>.Failure(FailureValue);
         }
 
         /// <summary>
         /// Chains a Success Result with a function call
         /// </summary>
-        /// <typeparam name="V">Type of the Result from binder</typeparam>
+        /// <typeparam name="U">Type of the Result from binder</typeparam>
         /// <param name="binder">Function to call if current Result is a Success</param>
         /// <returns>If Result is a Success, then binder is called with the success value. Otherwise, None is returned</returns>
         /// <remarks>Provides a monadic approach to data validation</remarks>
-        public Result<V, TFailure> AndThen<V>(Func<TSuccess, Result<V, TFailure>> binder)
+        public Result<U, TFailure> AndThen<U>(Func<TSuccess, Result<U, TFailure>> binder)
         {
             if (binder == null) throw new ArgumentNullException(nameof(binder));
-            return DidSucceed ? binder(SuccessValue) : Result<V, TFailure>.Failure(FailureValue);
+            return DidSucceed ? binder(SuccessValue) : Result<U, TFailure>.Failure(FailureValue);
         }
 
         /// <summary>

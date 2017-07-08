@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Optionally
 {
@@ -12,13 +9,15 @@ namespace Optionally
         /// <summary>
         /// Apply a function to a series of Result arguments
         /// </summary>
+        /// <typeparam name="TSuccess">Type of Success</typeparam>
+        /// <typeparam name="TFailure">Type of Failure</typeparam>
         /// <typeparam name="T1">Type of the first argument</typeparam>
         /// <typeparam name="T2">Type of the second argument</typeparam>
         /// <param name="func">Function to call if all arguments are a Success</param>
         /// <param name="first">First argument for the function</param>
         /// <param name="second">Second argument for the function</param>
         /// <returns>If all arguments are Success, then Success is returned. Otherwise, a Failure with all the argument Failures is returned</returns>
-        /// <exception cref="System.ArgumentNullException"></exception>
+        /// <exception cref="ArgumentNullException"></exception>
         /// <remarks>Provides an applicative style of data validation</remarks>
         public static Result<TSuccess, IEnumerable<TFailure>> Apply<TSuccess, TFailure, T1, T2>(Func<T1, T2, TSuccess> func, Result<T1, TFailure> first, Result<T2, TFailure> second)
         {
@@ -36,6 +35,8 @@ namespace Optionally
         /// <summary>
         /// Applies a function to a series of Result arguments
         /// </summary>
+        /// <typeparam name="TSuccess">Type of Success</typeparam>
+        /// <typeparam name="TFailure">Type of Failure</typeparam>
         /// <typeparam name="T1">Type of the first argument</typeparam>
         /// <typeparam name="T2">Type of the second argument</typeparam>
         /// <typeparam name="T3">Type of the third argument</typeparam>
