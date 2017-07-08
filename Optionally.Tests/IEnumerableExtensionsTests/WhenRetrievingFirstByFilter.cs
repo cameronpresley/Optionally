@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using System.Collections.Generic;
 
 namespace Optionally.Tests.IEnumerableExtensionsTests
@@ -7,21 +8,15 @@ namespace Optionally.Tests.IEnumerableExtensionsTests
     class WhenRetrievingFirstByFilter
     {
         [Test]
-        public void AndTheListIsNullThenNoneIsReturned()
+        public void AndTheListIsNullThenAnExceptionIsThrown()
         {
-            var observed = ((List<int>)null).TryFirst(_ => true);
-
-            var expected = Option.No<int>();
-            Assert.AreEqual(expected, observed);
+            Assert.Throws<ArgumentNullException>(() => ((List<int>) null).TryFirst(_ => true));
         }
         
         [Test]
-        public void AndTheFilterIsNullThenNoneIsReturned()
+        public void AndTheFilterIsNullThenAnExceptionIsThrown()
         {
-            var observed = new List<int> { 2 }.TryFirst(null);
-
-            var expected = Option.No<int>();
-            Assert.AreEqual(expected, observed);
+            Assert.Throws<ArgumentNullException>(() => new List<int> {2}.TryFirst(null));
         }
 
         [Test]
