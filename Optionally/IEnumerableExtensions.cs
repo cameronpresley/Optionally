@@ -14,12 +14,12 @@ namespace Optionally
         /// <returns>None if the list is empty or null, Some(T) otherwise</returns>
         public static Option<T> TryFirst<T>(this IEnumerable<T> enumerable)
         {
-            if (enumerable == null) return Option<T>.None;
+            if (enumerable == null) return Option.No<T>();
             foreach (var v in enumerable)
             {
-                return Option<T>.Some(v);
+                return Option.Some(v);
             }
-            return Option<T>.None;
+            return Option.No<T>();
         }
 
 
@@ -32,8 +32,7 @@ namespace Optionally
         /// <returns>None if the enumerable or filter is null. None if filter produces an empty IEnumerable, otherwise Some(T)</returns>
         public static Option<T> TryFirst<T>(this IEnumerable<T> enumerable, Func<T, bool> filter)
         {
-            if (enumerable == null) return Option<T>.None;
-            if (filter == null) return Option<T>.None;
+            if (filter == null) throw new ArgumentNullException(nameof(filter));
             return enumerable.Where(filter).TryFirst();
         }
     }
