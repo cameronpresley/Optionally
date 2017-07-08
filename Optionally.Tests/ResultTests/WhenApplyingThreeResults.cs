@@ -13,8 +13,9 @@ namespace Optionally.Tests.ResultTests
             var first = CreateSuccess(2);
             var second = CreateSuccess(4);
             var third = CreateSuccess(8);
+            Func<int, int, int, int> func = null;
 
-            Assert.Throws<ArgumentNullException>(() => Result<int, Exception>.Apply(null, first, second, third));
+            Assert.Throws<ArgumentNullException>(() => Result.Apply(func, first, second, third));
         }
 
         [Test]
@@ -25,9 +26,9 @@ namespace Optionally.Tests.ResultTests
             var third = CreateSuccess(8);
             Func<int, int, int, int> add = (a, b, c) => a + b + c;
 
-            var observed = Result<int, Exception>.Apply(add, first, second, third);
+            var observed = Result.Apply(add, first, second, third);
 
-            var expected = Result<int, List<Exception>>.Success(add(2, 4, 8));
+            var expected = Result<int, IEnumerable<Exception>>.Success(add(2, 4, 8));
             Assert.AreEqual(expected, observed);
         }
 
@@ -43,7 +44,7 @@ namespace Optionally.Tests.ResultTests
 
             Func<int, int, int, int> add = (a, b, c) => a + b + c;
 
-            var observed = Result<int, Exception>.Apply(add, first, second, third);
+            var observed = Result.Apply(add, first, second, third);
 
             var expectedErrors = new List<Exception> { firstException, secondException, thirdException };
             observed.Do(
@@ -60,7 +61,7 @@ namespace Optionally.Tests.ResultTests
             var third = CreateSuccess(4);
             Func<int, int, int, int> add = (a, b, c) => a + b + c;
 
-            var observed = Result<int, Exception>.Apply(add, first, second, third);
+            var observed = Result.Apply(add, first, second, third);
 
             var expectedErrors = new List<Exception> { firstException };
             observed.Do(
@@ -78,7 +79,7 @@ namespace Optionally.Tests.ResultTests
             var third = CreateSuccess(4);
             Func<int, int, int, int> add = (a, b, c) => a + b + c;
 
-            var observed = Result<int, Exception>.Apply(add, first, second, third);
+            var observed = Result.Apply(add, first, second, third);
 
             var expectedErrors = new List<Exception> { secondException };
             observed.Do(
@@ -96,7 +97,7 @@ namespace Optionally.Tests.ResultTests
             var third = CreateFailure(thirdException);
             Func<int, int, int, int> add = (a, b, c) => a + b + c;
 
-            var observed = Result<int, Exception>.Apply(add, first, second, third);
+            var observed = Result.Apply(add, first, second, third);
 
             var expectedErrors = new List<Exception> { thirdException };
             observed.Do(
@@ -115,7 +116,7 @@ namespace Optionally.Tests.ResultTests
             var third = CreateSuccess(4);
             Func<int, int, int, int> add = (a, b, c) => a + b + c;
 
-            var observed = Result<int, Exception>.Apply(add, first, second, third);
+            var observed = Result.Apply(add, first, second, third);
 
             var expectedErrors = new List<Exception> { firstException, secondException };
             observed.Do(
@@ -134,7 +135,7 @@ namespace Optionally.Tests.ResultTests
             var third = CreateFailure(thirdException);
             Func<int, int, int, int> add = (a, b, c) => a + b + c;
 
-            var observed = Result<int, Exception>.Apply(add, first, second, third);
+            var observed = Result.Apply(add, first, second, third);
 
             var expectedErrors = new List<Exception> { secondException, thirdException };
             observed.Do(
@@ -153,7 +154,7 @@ namespace Optionally.Tests.ResultTests
             var third = CreateFailure(thirdException);
             Func<int, int, int, int> add = (a, b, c) => a + b + c;
 
-            var observed = Result<int, Exception>.Apply(add, first, second, third);
+            var observed = Result.Apply(add, first, second, third);
 
             var expectedErrors = new List<Exception> { firstException, thirdException };
             observed.Do(
