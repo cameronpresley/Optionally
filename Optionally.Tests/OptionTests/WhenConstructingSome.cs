@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 
 namespace Optionally.Tests.OptionTests
 {
@@ -8,10 +9,7 @@ namespace Optionally.Tests.OptionTests
         [Test]
         public void AndTheValueIsNullThenNoneIsConstructed()
         {
-            var observed = Option.Some<object>(null);
-
-            var expected = Option.No<object>();
-            Assert.AreEqual(expected, observed);
+            Assert.Throws<ArgumentNullException>(() => Option.Some<object>(null));
         }
 
         [Test]
