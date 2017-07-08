@@ -32,11 +32,6 @@ namespace Optionally
         }
 
         /// <summary>
-        /// Factory method that creates an Option without a value
-        /// </summary>
-        /// <returns></returns>
-
-        /// <summary>
         /// Convert the current Option to a different Option
         /// </summary>
         /// <typeparam name="U">Type to convert to</typeparam>
