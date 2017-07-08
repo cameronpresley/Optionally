@@ -25,11 +25,11 @@ namespace Optionally
             if (func == null) throw new ArgumentNullException(nameof(func));
 
             if (first.DidSucceed && second.DidSucceed)
-                return Result<TSuccess, List<TFailure>>.Success(func(first._success, second._success));
+                return Result<TSuccess, List<TFailure>>.Success(func(first.SuccessValue, second.SuccessValue));
 
             var errors = new List<TFailure>();
-            if (!first.DidSucceed) errors.Add(first._failure);
-            if (!second.DidSucceed) errors.Add(second._failure);
+            if (!first.DidSucceed) errors.Add(first.FailureValue);
+            if (!second.DidSucceed) errors.Add(second.FailureValue);
             return Result<TSuccess, List<TFailure>>.Failure(errors);
         }
 
@@ -50,12 +50,12 @@ namespace Optionally
             if (func == null) throw new ArgumentNullException(nameof(func));
 
             if (first.DidSucceed && second.DidSucceed && third.DidSucceed)
-                return Result<TSuccess, List<TFailure>>.Success(func(first._success, second._success, third._success));
+                return Result<TSuccess, List<TFailure>>.Success(func(first.SuccessValue, second.SuccessValue, third.SuccessValue));
 
             var errors = new List<TFailure>();
-            if (!first.DidSucceed) errors.Add(first._failure);
-            if (!second.DidSucceed) errors.Add(second._failure);
-            if (!third.DidSucceed) errors.Add(third._failure);
+            if (!first.DidSucceed) errors.Add(first.FailureValue);
+            if (!second.DidSucceed) errors.Add(second.FailureValue);
+            if (!third.DidSucceed) errors.Add(third.FailureValue);
 
             return Result<TSuccess, List<TFailure>>.Failure(errors);
         }

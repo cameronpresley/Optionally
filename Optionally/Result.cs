@@ -10,14 +10,14 @@ namespace Optionally
     /// <typeparam name="TFailure">Type of failure</typeparam>
     public struct Result<TSuccess, TFailure>
     {
-        internal readonly TSuccess _success;
-        internal readonly TFailure _failure;
+        internal readonly TSuccess SuccessValue;
+        internal readonly TFailure FailureValue;
         internal readonly bool DidSucceed;
 
         private Result(TSuccess success, TFailure failure, bool didSucceed)
         {
-            _success = success;
-            _failure = failure;
+            SuccessValue = success;
+            FailureValue = failure;
             DidSucceed = didSucceed;
         }
 
@@ -53,8 +53,8 @@ namespace Optionally
         {
             if (mapper == null) throw new ArgumentNullException(nameof(mapper));
             return DidSucceed
-                ? Result<V, TFailure>.Success(mapper(_success))
-                : Result<V, TFailure>.Failure(_failure);
+                ? Result<V, TFailure>.Success(mapper(SuccessValue))
+                : Result<V, TFailure>.Failure(FailureValue);
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Optionally
         public Result<V, TFailure> AndThen<V>(Func<TSuccess, Result<V, TFailure>> binder)
         {
             if (binder == null) throw new ArgumentNullException(nameof(binder));
-            return DidSucceed ? binder(_success) : Result<V, TFailure>.Failure(_failure);
+            return DidSucceed ? binder(SuccessValue) : Result<V, TFailure>.Failure(FailureValue);
         }
 
         /// <summary>
@@ -78,9 +78,9 @@ namespace Optionally
         public void Do(Action<TSuccess> onSuccess, Action<TFailure> onFailure)
         {
             if (DidSucceed)
-                onSuccess?.Invoke(_success);
+                onSuccess?.Invoke(SuccessValue);
             else
-                onFailure?.Invoke(_failure);
+                onFailure?.Invoke(FailureValue);
         }
     }
 }
