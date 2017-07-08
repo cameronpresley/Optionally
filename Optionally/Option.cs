@@ -20,7 +20,7 @@ namespace Optionally
         internal static readonly Option<T> None = new Option<T>(default(T), false); 
         internal static Option<T> Some(T value)
         {
-            return value == null ? None : new Option<T>(value, true);
+            return new Option<T>(value, true);
         }
 
         /// <summary>
