@@ -17,17 +17,10 @@ namespace Optionally
             HasValue = hasValue;
         }
 
-        public static readonly Option<T> None = new Option<T>(default(T), false); 
-
-        /// <summary>
-        /// Factory method that creates an Option with a value inside
-        /// </summary>
-        /// <param name="value">The value to embed in the Option</param>
-        /// <remarks>Does not check if value is null</remarks>
-        /// <returns></returns>
-        public static Option<T> Some(T value)
+        internal static readonly Option<T> None = new Option<T>(default(T), false); 
+        internal static Option<T> Some(T value)
         {
-            return value == null ? None : new Option<T>(value, true);
+            return new Option<T>(value, true);
         }
 
         /// <summary>

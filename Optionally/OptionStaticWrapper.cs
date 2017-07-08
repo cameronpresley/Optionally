@@ -42,5 +42,28 @@ namespace Optionally
                 return Option<TResult>.Some(func(first.Value, second.Value, third.Value));
             return Option<TResult>.None;
         }
+
+        /// <summary>
+        /// Creates an Option with no value inside
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static Option<T> No<T>()
+        {
+            return Option<T>.None;
+        }
+
+        /// <summary>
+        /// Creates an Option with a value inside
+        /// </summary>
+        /// <typeparam name="T">Type of the value</typeparam>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException">If value is null</exception>
+        public static Option<T> Some<T>(T value)
+        {
+            if (value == null) throw new ArgumentNullException(nameof(value));
+            return Option<T>.Some(value);
+        }
     }
 }

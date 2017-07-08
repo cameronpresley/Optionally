@@ -12,7 +12,7 @@ namespace Optionally.Tests.NullableExtensionTests
 
             var observed = input.ToOption();
 
-            var expected = Option<int>.None;
+            var expected = Option.No<int>();
             Assert.AreEqual(expected, observed);
         }
 
@@ -23,7 +23,7 @@ namespace Optionally.Tests.NullableExtensionTests
 
             var observed = input.ToOption();
 
-            var expected = Option<int>.Some(2);
+            var expected = Option.Some(2);
             Assert.AreEqual(expected, observed);
         }
 
@@ -34,7 +34,7 @@ namespace Optionally.Tests.NullableExtensionTests
 
             var observed = input.ToOption();
 
-            var expected = Option<int>.None;
+            var expected = Option.No<int>();
             Assert.AreEqual(expected, observed);
         }
     }

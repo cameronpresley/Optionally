@@ -8,9 +8,9 @@ namespace Optionally.Tests.OptionTests
         [Test]
         public void ThenNoneIsConstructed()
         {
-            var observed = Option<int>.None;
+            var observed = Option.No<int>();;
 
-            var expected = Option<int>.None;
+            var expected = Option.No<int>();;
             Assert.AreEqual(expected, observed);
         }
     }
