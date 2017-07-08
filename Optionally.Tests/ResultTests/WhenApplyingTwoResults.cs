@@ -12,7 +12,9 @@ namespace Optionally.Tests.ResultTests
         {
             var first = CreateSuccess(2);
             var second = CreateSuccess(4);
-            Assert.Throws<ArgumentNullException>(() => Result<int, Exception>.Apply(null, first, second));
+            Func<int, int, int> func = null;
+
+            Assert.Throws<ArgumentNullException>(() => Result.Apply(func, first, second));
         }
 
         [Test]
@@ -23,7 +25,7 @@ namespace Optionally.Tests.ResultTests
             var second = CreateSuccess(2);
             Func<int, int, int> add = (a, b) => a + b;
 
-            var observed = Result<int, Exception>.Apply(add, first, second);
+            var observed = Result.Apply(add, first, second);
 
             var expectedErrors = new List<Exception> { exception };
             observed
@@ -39,7 +41,7 @@ namespace Optionally.Tests.ResultTests
             var second = CreateFailure(exception);
             Func<int, int, int> add = (a, b) => a + b;
 
-            var observed = Result<int, Exception>.Apply(add, first, second);
+            var observed = Result.Apply(add, first, second);
 
             var expectedErrors = new List<Exception> { exception };
             observed
@@ -56,7 +58,7 @@ namespace Optionally.Tests.ResultTests
             var second = CreateFailure(secondException);
             Func<int, int, int> add = (a, b) => a + b;
 
-            var observed = Result<int, Exception>.Apply(add, first, second);
+            var observed = Result.Apply(add, first, second);
 
             var expectedErrors = new List<Exception> { firstException, secondException};
             observed
@@ -71,7 +73,7 @@ namespace Optionally.Tests.ResultTests
             var second = CreateSuccess(4);
             Func<int, int, int> add = (a, b) => a + b;
 
-            var observed = Result<int, Exception>.Apply(add, first, second);
+            var observed = Result.Apply(add, first, second);
 
             var expected = Result<int, List<Exception>>.Success(add(2, 4));
             Assert.AreEqual(expected, observed);
