@@ -11,7 +11,7 @@ namespace Optionally.Tests.IEnumerableExtensionsTests
         {
             var observed = ((List<int>)null).TryFirst();
 
-            var expected = Option<int>.None;
+            var expected = Option.No<int>();
             Assert.AreEqual(expected, observed);
         }
 
@@ -20,7 +20,7 @@ namespace Optionally.Tests.IEnumerableExtensionsTests
         {
             var observed = new List<int>().TryFirst();
 
-            var expected = Option<int>.None;
+            var expected = Option.No<int>();
             Assert.AreEqual(expected, observed);
         }
 
@@ -31,7 +31,7 @@ namespace Optionally.Tests.IEnumerableExtensionsTests
 
             var observed = new List<int> { element }.TryFirst();
 
-            var expected = Option<int>.Some(element);
+            var expected = Option.Some(element);
             Assert.AreEqual(expected, observed);
         }
 
@@ -42,7 +42,7 @@ namespace Optionally.Tests.IEnumerableExtensionsTests
 
             var observed = new List<int> { firstElement, 5, -10 }.TryFirst();
 
-            var expected = Option<int>.Some(firstElement);
+            var expected = Option.Some(firstElement);
             Assert.AreEqual(expected, observed);
         }
     }

@@ -9,65 +9,65 @@ namespace Optionally.Tests.OptionTests
         [Test]
         public void AndTheFirstOptionIsNoneThenNoneIsReturned()
         {
-            var first = Option<int>.None;
-            var second = Option<int>.Some(2);
-            var third = Option<int>.Some(4);
+            var first = Option.No<int>();
+            var second = Option.Some(2);
+            var third = Option.Some(4);
             Func<int, int, int, int> add = (a, b, c) => a + b + c;
 
             var observed = Option.Apply(add, first, second, third);
 
-            var expected = Option<int>.None;
+            var expected = Option.No<int>();
             Assert.AreEqual(expected, observed);
         }
 
         [Test]
         public void AndTheSecondOptionIsNoneThenNoneIsReturned()
         {
-            var first = Option<int>.Some(2);
-            var second = Option<int>.None;
-            var third = Option<int>.Some(4);
+            var first = Option.Some(2);
+            var second = Option.No<int>();
+            var third = Option.Some(4);
             Func<int, int, int, int> add = (a, b, c) => a + b + c;
 
             var observed = Option.Apply(add, first, second, third);
 
-            var expected = Option<int>.None;
+            var expected = Option.No<int>();
             Assert.AreEqual(expected, observed);
         }
 
         [Test]
         public void AndTheThirdOptionIsNoneThenNoneIsReturned()
         {
-            var first = Option<int>.Some(2);
-            var second = Option<int>.Some(4);
-            var third = Option<int>.None;
+            var first = Option.Some(2);
+            var second = Option.Some(4);
+            var third = Option.No<int>();
             Func<int, int, int, int> add = (a, b, c) => a + b + c;
 
             var observed = Option.Apply(add, first, second, third);
 
-            var expected = Option<int>.None;
+            var expected = Option.No<int>();
             Assert.AreEqual(expected, observed);
         }
 
         [Test]
         public void AndTheOptionsAreSomeThenTheFunctionIsInvoked()
         {
-            var first = Option<int>.Some(2);
-            var second = Option<int>.Some(4);
-            var third = Option<int>.Some(8);
+            var first = Option.Some(2);
+            var second = Option.Some(4);
+            var third = Option.Some(8);
             Func<int, int, int, int> add = (a, b, c) => a + b + c;
 
             var observed = Option.Apply(add, first, second, third);
 
-            var expected = Option<int>.Some(add(2, 4, 8));
+            var expected = Option.Some(add(2, 4, 8));
             Assert.AreEqual(expected, observed);
         }
 
         [Test]
         public void AndTheFunctionIsNullThenNoneIsReturned()
         {
-            var first = Option<int>.Some(2);
-            var second = Option<int>.Some(4);
-            var third = Option<int>.Some(8);
+            var first = Option.Some(2);
+            var second = Option.Some(4);
+            var third = Option.Some(8);
 
             Assert.Throws<ArgumentNullException>(() => Option.Apply((Func<int, int, int,int>)null, first, second, third));
         }

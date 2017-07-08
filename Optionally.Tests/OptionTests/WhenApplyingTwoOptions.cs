@@ -9,47 +9,47 @@ namespace Optionally.Tests.OptionTests
         [Test]
         public void AndTheFirstOptionIsNoneThenNoneIsReturned()
         {
-            var first = Option<int>.None;
-            var second = Option<int>.Some(2);
+            var first = Option.No<int>();
+            var second = Option.Some(2);
             Func<int, int, int> add = (a, b) => a + b;
 
             var observed = Option.Apply(add, first, second);
 
-            var expected = Option<int>.None;
+            var expected = Option.No<int>();
             Assert.AreEqual(expected, observed);
         }
 
         [Test]
         public void AndTheSecondOptionIsNoneThenNoneIsReturned()
         {
-            var first = Option<int>.Some(2);
-            var second = Option<int>.None;
+            var first = Option.Some(2);
+            var second = Option.No<int>();
             Func<int, int, int> add = (a, b) => a + b;
 
             var observed = Option.Apply(add, first, second);
 
-            var expected = Option<int>.None;
+            var expected = Option.No<int>();
             Assert.AreEqual(expected, observed);
         }
 
         [Test]
         public void AndBothOptionsAreSomeThenTheFunctionIsInvoked()
         {
-            var first = Option<int>.Some(2);
-            var second = Option<int>.Some(4);
+            var first = Option.Some(2);
+            var second = Option.Some(4);
             Func<int, int, int> add = (a, b) => a + b;
 
             var observed = Option.Apply(add, first, second);
 
-            var expected = Option<int>.Some(add(2, 4));
+            var expected = Option.Some(add(2, 4));
             Assert.AreEqual(expected, observed);
         }
 
         [Test]
         public void AndTheFunctionIsNullThenNoneIsReturned()
         {
-            var first = Option<int>.Some(2);
-            var second = Option<int>.Some(4);
+            var first = Option.Some(2);
+            var second = Option.Some(4);
 
             Assert.Throws<ArgumentNullException>(() => Option.Apply((Func<int, int, int>)null, first, second));
         }

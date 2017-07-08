@@ -8,10 +8,9 @@ namespace Optionally.Tests.OptionTests
         [Test]
         public void AndTheValueIsNullThenNoneIsConstructed()
         {
-            object input = null;
-            var observed = Option<object>.Some(input);
+            var observed = Option.Some<object>(null);
 
-            var expected = Option<object>.None;
+            var expected = Option.No<object>();
             Assert.AreEqual(expected, observed);
         }
 
@@ -19,9 +18,9 @@ namespace Optionally.Tests.OptionTests
         public void AndTheValueIsNotNullThenSomeIsConstructed()
         {
             var input = 4;
-            var observed = Option<int>.Some(input);
+            var observed = Option.Some(input);
 
-            var expected = Option<int>.Some(4);
+            var expected = Option.Some(4);
             Assert.AreEqual(expected, observed);
         }
     }

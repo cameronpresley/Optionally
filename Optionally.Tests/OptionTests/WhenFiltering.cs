@@ -9,34 +9,34 @@ namespace Optionally.Tests.OptionTests
         [Test]
         public void AndNoneThenNoneIsReturned()
         {
-            var observed = Option<int>.None.Where(_ => true);
+            var observed = Option.No<int>().Where(_ => true);
 
-            var expected = Option<int>.None;
+            var expected = Option.No<int>();;
             Assert.AreEqual(expected, observed);
         }
 
         [Test]
         public void AndSomeAndValueFitsFilterThenSomeReturned()
         {
-            var observed = Option<int>.Some(2).Where(_ => true);
+            var observed = Option.Some(2).Where(_ => true);
 
-            var expected = Option<int>.Some(2);
+            var expected = Option.Some(2);
             Assert.AreEqual(expected, observed);
         }
 
         [Test]
         public void AndSomeAndValueDoesntFitFilterThenNoneIsReturned()
         {
-            var observed = Option<int>.Some(2).Where(_ => false);
+            var observed = Option.Some(2).Where(_ => false);
 
-            var expected = Option<int>.None;
+            var expected = Option.No<int>();;
             Assert.AreEqual(expected, observed);
         }
 
         [Test]
         public void AndFilterIsNullThenAnExceptionIsThrown()
         {
-            Assert.Throws<ArgumentNullException>(() => Option<int>.Some(2).Where(null));
+            Assert.Throws<ArgumentNullException>(() => Option.Some(2).Where(null));
         }
     }
 }
