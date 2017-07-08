@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 
 namespace Optionally.Tests.OptionTests
 {
@@ -33,12 +34,9 @@ namespace Optionally.Tests.OptionTests
         }
 
         [Test]
-        public void AndFilterIsNullThenNoneIsReturned()
+        public void AndFilterIsNullThenAnExceptionIsThrown()
         {
-            var observed = Option<int>.Some(2).Where(null);
-
-            var expected = Option<int>.None;
-            Assert.AreEqual(expected, observed);
+            Assert.Throws<ArgumentNullException>(() => Option<int>.Some(2).Where(null));
         }
     }
 }

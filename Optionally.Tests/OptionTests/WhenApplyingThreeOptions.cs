@@ -69,10 +69,7 @@ namespace Optionally.Tests.OptionTests
             var second = Option<int>.Some(4);
             var third = Option<int>.Some(8);
 
-            var observed = Option<int>.Apply(null, first, second, third);
-
-            var expected = Option<int>.None;
-            Assert.AreEqual(expected, observed);
+            Assert.Throws<ArgumentNullException>(() => Option<int>.Apply(null, first, second, third));
         }
     }
 }

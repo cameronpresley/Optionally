@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Optionally
 {
@@ -81,7 +80,7 @@ namespace Optionally
         /// <returns>If Option is Some and the value fulfills the filter, then Some. Otherwise None</returns>
         public Option<T> Where(Func<T, bool> filter)
         {
-            if (filter == null) return None;
+            if (filter == null) throw new ArgumentNullException(nameof(filter));
             if (_hasValue && filter(_value)) return Some(_value);
             return None;
         }
@@ -98,7 +97,7 @@ namespace Optionally
         /// <remarks>Provides an applicative style for data validation</remarks>
         public static Option<T> Apply<T1, T2>(Func<T1, T2, T> func, Option<T1> first, Option<T2> second)
         {
-            if (func == null) return None;
+            if (func == null) throw new ArgumentNullException(nameof(func));
 
             if (first._hasValue && second._hasValue)
                 return Some(func(first._value, second._value));
@@ -119,7 +118,8 @@ namespace Optionally
         /// <remarks>Provides an applicative style for data validation</remarks>
         public static Option<T> Apply<T1, T2, T3>(Func<T1, T2, T3, T> func, Option<T1> first, Option<T2> second, Option<T3> third)
         {
-            if (func == null) return None;
+            if (func == null) throw new ArgumentNullException(nameof(func));
+
             if (first._hasValue && second._hasValue && third._hasValue)
                 return Some(func(first._value, second._value, third._value));
             return None;
