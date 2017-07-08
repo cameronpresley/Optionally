@@ -14,7 +14,7 @@ namespace Optionally.Tests.OptionTests
             var third = Option<int>.Some(4);
             Func<int, int, int, int> add = (a, b, c) => a + b + c;
 
-            var observed = Option.Apply(add, first, second, third);
+            var observed = Option<int>.Apply(add, first, second, third);
 
             var expected = Option<int>.None;
             Assert.AreEqual(expected, observed);
@@ -28,7 +28,7 @@ namespace Optionally.Tests.OptionTests
             var third = Option<int>.Some(4);
             Func<int, int, int, int> add = (a, b, c) => a + b + c;
 
-            var observed = Option.Apply(add, first, second, third);
+            var observed = Option<int>.Apply(add, first, second, third);
 
             var expected = Option<int>.None;
             Assert.AreEqual(expected, observed);
@@ -42,7 +42,7 @@ namespace Optionally.Tests.OptionTests
             var third = Option<int>.None;
             Func<int, int, int, int> add = (a, b, c) => a + b + c;
 
-            var observed = Option.Apply(add, first, second, third);
+            var observed = Option<int>.Apply(add, first, second, third);
 
             var expected = Option<int>.None;
             Assert.AreEqual(expected, observed);
@@ -56,7 +56,7 @@ namespace Optionally.Tests.OptionTests
             var third = Option<int>.Some(8);
             Func<int, int, int, int> add = (a, b, c) => a + b + c;
 
-            var observed = Option.Apply(add, first, second, third);
+            var observed = Option<int>.Apply(add, first, second, third);
 
             var expected = Option<int>.Some(add(2, 4, 8));
             Assert.AreEqual(expected, observed);
@@ -69,7 +69,7 @@ namespace Optionally.Tests.OptionTests
             var second = Option<int>.Some(4);
             var third = Option<int>.Some(8);
 
-            Assert.Throws<ArgumentNullException>(() => Option.Apply((Func<int, int, int,int>)null, first, second, third));
+            Assert.Throws<ArgumentNullException>(() => Option<int>.Apply(null, first, second, third));
         }
     }
 }
