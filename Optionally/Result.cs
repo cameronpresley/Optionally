@@ -6,15 +6,15 @@ namespace Optionally
     /// <summary>
     /// Models a Success or a Failure
     /// </summary>
-    /// <typeparam name="T">Type of success</typeparam>
-    /// <typeparam name="U">Type of failure</typeparam>
-    public struct Result<T, U>
+    /// <typeparam name="TSuccess">Type of success</typeparam>
+    /// <typeparam name="TFailure">Type of failure</typeparam>
+    public struct Result<TSuccess, TFailure>
     {
-        private readonly T _success;
-        private readonly U _failure;
+        private readonly TSuccess _success;
+        private readonly TFailure _failure;
         private readonly bool _didSucceed;
 
-        private Result(T success, U failure, bool didSucceed)
+        private Result(TSuccess success, TFailure failure, bool didSucceed)
         {
             _success = success;
             _failure = failure;
@@ -27,9 +27,9 @@ namespace Optionally
         /// <param name="value">Value of the success</param>
         /// <returns>Success Result</returns>
         /// <remarks>Does not check if value is null</remarks>
-        public static Result<T, U> Success(T value)
+        public static Result<TSuccess, TFailure> Success(TSuccess value)
         {
-            return new Result<T, U>(value, default(U), true);
+            return new Result<TSuccess, TFailure>(value, default(TFailure), true);
         }
 
         /// <summary>
@@ -38,9 +38,9 @@ namespace Optionally
         /// <param name="value">Value of the failure</param>
         /// <returns>Failure Result</returns>
         /// <remarks>Does not check if value is null</remarks>
-        public static Result<T, U> Failure(U value)
+        public static Result<TSuccess, TFailure> Failure(TFailure value)
         {
-            return new Result<T, U>(default(T), value, false);
+            return new Result<TSuccess, TFailure>(default(TSuccess), value, false);
         }
 
         /// <summary>
@@ -49,12 +49,12 @@ namespace Optionally
         /// <typeparam name="V">Type of the new Success</typeparam>
         /// <param name="mapper">How to convert the Success value</param>
         /// <returns>If Result is a Success, then Success is returned. Otherwise a Failure is returned</returns>
-        public Result<V, U> Map<V>(Func<T, V> mapper)
+        public Result<V, TFailure> Map<V>(Func<TSuccess, V> mapper)
         {
             if (mapper == null) throw new ArgumentNullException(nameof(mapper));
             return _didSucceed
-                ? Result<V, U>.Success(mapper(_success))
-                : Result<V, U>.Failure(_failure);
+                ? Result<V, TFailure>.Success(mapper(_success))
+                : Result<V, TFailure>.Failure(_failure);
         }
 
         /// <summary>
@@ -64,10 +64,10 @@ namespace Optionally
         /// <param name="binder">Function to call if current Result is a Success</param>
         /// <returns>If Result is a Success, then binder is called with the success value. Otherwise, None is returned</returns>
         /// <remarks>Provides a monadic approach to data validation</remarks>
-        public Result<V, U> AndThen<V>(Func<T, Result<V, U>> binder)
+        public Result<V, TFailure> AndThen<V>(Func<TSuccess, Result<V, TFailure>> binder)
         {
             if (binder == null) throw new ArgumentNullException(nameof(binder));
-            return _didSucceed ? binder(_success) : Result<V, U>.Failure(_failure);
+            return _didSucceed ? binder(_success) : Result<V, TFailure>.Failure(_failure);
         }
 
         /// <summary>
@@ -75,12 +75,12 @@ namespace Optionally
         /// </summary>
         /// <param name="onSuccess">Action to call if Result is a Success</param>
         /// <param name="onFailure">Action to call if Result is a Failure</param>
-        public void Do(Action<T> onSuccess, Action<U> onFailure)
+        public void Do(Action<TSuccess> onSuccess, Action<TFailure> onFailure)
         {
-            if (_didSucceed && onSuccess != null)
-                onSuccess(_success);
-            else if (!_didSucceed && onFailure != null)
-                onFailure(_failure);
+            if (_didSucceed)
+                onSuccess?.Invoke(_success);
+            else
+                onFailure?.Invoke(_failure);
         }
 
         /// <summary>
@@ -94,17 +94,17 @@ namespace Optionally
         /// <returns>If all arguments are Success, then Success is returned. Otherwise, a Failure with all the argument Failures is returned</returns>
         /// <exception cref="System.ArgumentNullException"></exception>
         /// <remarks>Provides an applicative style of data validation</remarks>
-        public static Result<T, List<U>> Apply<T1, T2>(Func<T1, T2, T> func, Result<T1, U> first, Result<T2, U> second)
+        public static Result<TSuccess, List<TFailure>> Apply<T1, T2>(Func<T1, T2, TSuccess> func, Result<T1, TFailure> first, Result<T2, TFailure> second)
         {
             if (func == null) throw new ArgumentNullException(nameof(func));
 
             if (first._didSucceed && second._didSucceed)
-                return Result<T, List<U>>.Success(func(first._success, second._success));
+                return Result<TSuccess, List<TFailure>>.Success(func(first._success, second._success));
 
-            var errors = new List<U>();
+            var errors = new List<TFailure>();
             if (!first._didSucceed) errors.Add(first._failure);
             if (!second._didSucceed) errors.Add(second._failure);
-            return Result<T, List<U>>.Failure(errors);
+            return Result<TSuccess, List<TFailure>>.Failure(errors);
         }
 
         /// <summary>
@@ -119,19 +119,19 @@ namespace Optionally
         /// <param name="third">Third argument for the function</param>
         /// <returns>If all arguments are Success, then a Success is returned. Otherwise, all the Failures are concatentated into a Failure Result</returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public static Result<T, List<U>> Apply<T1, T2, T3>(Func<T1, T2, T3, T> func, Result<T1, U> first, Result<T2, U> second, Result<T3, U> third)
+        public static Result<TSuccess, List<TFailure>> Apply<T1, T2, T3>(Func<T1, T2, T3, TSuccess> func, Result<T1, TFailure> first, Result<T2, TFailure> second, Result<T3, TFailure> third)
         {
             if (func == null) throw new ArgumentNullException(nameof(func));
 
             if (first._didSucceed && second._didSucceed && third._didSucceed)
-                return Result<T, List<U>>.Success(func(first._success, second._success, third._success));
+                return Result<TSuccess, List<TFailure>>.Success(func(first._success, second._success, third._success));
 
-            var errors = new List<U>();
+            var errors = new List<TFailure>();
             if (!first._didSucceed) errors.Add(first._failure);
             if (!second._didSucceed) errors.Add(second._failure);
             if (!third._didSucceed) errors.Add(third._failure);
 
-            return Result<T, List<U>>.Failure(errors);
+            return Result<TSuccess, List<TFailure>>.Failure(errors);
         }
     }
 }
