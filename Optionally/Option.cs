@@ -68,14 +68,10 @@ namespace Optionally
         /// <param name="ifNone">Function to call if Option is None</param>
         public void Do(Action<T> ifSome, Action ifNone)
         {
-            if (_hasValue && ifSome != null)
-            {
-                ifSome(_value);
-            }
-            else if (!_hasValue && ifNone != null)
-            {
-                ifNone();
-            }
+            if (_hasValue)
+                ifSome?.Invoke(_value);
+            else
+                ifNone?.Invoke();
         }
 
         /// <summary>
