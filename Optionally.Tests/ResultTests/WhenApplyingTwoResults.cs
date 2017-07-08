@@ -75,7 +75,7 @@ namespace Optionally.Tests.ResultTests
 
             var observed = Result.Apply(add, first, second);
 
-            var expected = Result<int, List<Exception>>.Success(add(2, 4));
+            var expected = Result<int, IEnumerable<Exception>>.Success(add(2, 4));
             Assert.AreEqual(expected, observed);
         }
 
