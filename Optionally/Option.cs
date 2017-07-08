@@ -8,13 +8,13 @@ namespace Optionally
     /// <typeparam name="T"></typeparam>
     public struct Option<T>
     {
-        private readonly T _value;
-        private readonly bool _hasValue;
+        internal readonly T Value;
+        internal readonly bool HasValue;
         
         private Option(T value, bool hasValue)
         {
-            _value = value;
-            _hasValue = hasValue;
+            Value = value;
+            HasValue = hasValue;
         }
 
         public static readonly Option<T> None = new Option<T>(default(T), false); 
@@ -40,8 +40,8 @@ namespace Optionally
         public Option<U> Map<U>(Func<T, U> mapper)
         {
             if (mapper == null) return Option<U>.None;
-            return _hasValue
-                ? Option<U>.Some(mapper(_value))
+            return HasValue
+                ? Option<U>.Some(mapper(Value))
                 : Option<U>.None;
         }
 
@@ -55,8 +55,8 @@ namespace Optionally
         public Option<U> AndThen<U>(Func<T, Option<U>> binder)
         {
             if (binder == null) return Option<U>.None;
-            return _hasValue
-                ? binder(_value)
+            return HasValue
+                ? binder(Value)
                 : Option<U>.None;
         }
 
@@ -67,8 +67,8 @@ namespace Optionally
         /// <param name="ifNone">Function to call if Option is None</param>
         public void Do(Action<T> ifSome, Action ifNone)
         {
-            if (_hasValue)
-                ifSome?.Invoke(_value);
+            if (HasValue)
+                ifSome?.Invoke(Value);
             else
                 ifNone?.Invoke();
         }
@@ -81,47 +81,7 @@ namespace Optionally
         public Option<T> Where(Func<T, bool> filter)
         {
             if (filter == null) throw new ArgumentNullException(nameof(filter));
-            if (_hasValue && filter(_value)) return Some(_value);
-            return None;
-        }
-
-        /// <summary>
-        /// Create an option based on a function call and Option arguments
-        /// </summary>
-        /// <typeparam name="T1">Type of the first arugment for the func</typeparam>
-        /// <typeparam name="T2">Type of the second argument for the func</typeparam>
-        /// <param name="func">Function to call if all the arguments are Some</param>
-        /// <param name="first">First argument for func</param>
-        /// <param name="second">Second argument for the func</param>
-        /// <returns>If all arguments are Some, then Some is returned. None otherwise</returns>
-        /// <remarks>Provides an applicative style for data validation</remarks>
-        public static Option<T> Apply<T1, T2>(Func<T1, T2, T> func, Option<T1> first, Option<T2> second)
-        {
-            if (func == null) throw new ArgumentNullException(nameof(func));
-
-            if (first._hasValue && second._hasValue)
-                return Some(func(first._value, second._value));
-            return None;
-        }
-
-        /// <summary>
-        /// Create an option based on a function call and Option arguments
-        /// </summary>
-        /// <typeparam name="T1">Type of the first argument for the func</typeparam>
-        /// <typeparam name="T2">Type of the second argument for the func</typeparam>
-        /// <typeparam name="T3">Type of the third argument for the func</typeparam>
-        /// <param name="func">Function to call if all the arguments are Some</param>
-        /// <param name="first">First argument for func</param>
-        /// <param name="second">Second argument for func</param>
-        /// <param name="third">Third argument for func</param>
-        /// <returns>If all arguments are Some, then Some is returned. Otherwise, None is returned</returns>
-        /// <remarks>Provides an applicative style for data validation</remarks>
-        public static Option<T> Apply<T1, T2, T3>(Func<T1, T2, T3, T> func, Option<T1> first, Option<T2> second, Option<T3> third)
-        {
-            if (func == null) throw new ArgumentNullException(nameof(func));
-
-            if (first._hasValue && second._hasValue && third._hasValue)
-                return Some(func(first._value, second._value, third._value));
+            if (HasValue && filter(Value)) return Some(Value);
             return None;
         }
     }
