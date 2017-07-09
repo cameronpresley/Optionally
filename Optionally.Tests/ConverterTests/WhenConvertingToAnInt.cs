@@ -8,7 +8,7 @@ namespace Optionally.Tests.ConverterTests
         [Test]
         public void AndInputIsAnIntegerThenSomeIsReturned()
         {
-            var result = Converter.ToInt("15");
+            var result = OptionConveter.ToInt("15");
 
             var expected = Option.Some(15);
             Assert.AreEqual(expected, result);
@@ -17,7 +17,7 @@ namespace Optionally.Tests.ConverterTests
         [Test]
         public void AndInputIsADoubleThenNoneIsReturned()
         {
-            var result = Converter.ToInt("15.2");
+            var result = OptionConveter.ToInt("15.2");
             
             var expected = Option.No<int>();
             Assert.AreEqual(expected, result);
@@ -26,7 +26,7 @@ namespace Optionally.Tests.ConverterTests
         [Test]
         public void AndInputIsNotANumberThenNoneIsReturned()
         {
-            var result = Converter.ToInt("kumquats");
+            var result = OptionConveter.ToInt("kumquats");
 
             var expected = Option.No<int>();
             Assert.AreEqual(expected, result);

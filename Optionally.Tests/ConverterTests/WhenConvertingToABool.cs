@@ -8,7 +8,7 @@ namespace Optionally.Tests.ConverterTests
         [Test]
         public void AndInputIsTrueThenSomeIsReturned()
         {
-            var result = Converter.ToBool("true");
+            var result = OptionConveter.ToBool("true");
 
             var expected = Option.Some(true);
             Assert.AreEqual(expected, result);
@@ -17,7 +17,7 @@ namespace Optionally.Tests.ConverterTests
         [Test]
         public void AndInputIs0ThenNoneIsReturned()
         {
-            var result = Converter.ToBool("0");
+            var result = OptionConveter.ToBool("0");
 
             var expected = Option.No<bool>();
             Assert.AreEqual(expected, result);
@@ -26,7 +26,7 @@ namespace Optionally.Tests.ConverterTests
         [Test]
         public void AndInputIsWordThenNoneIsReturned()
         {
-            var result = Converter.ToBool("word");
+            var result = OptionConveter.ToBool("word");
 
             var expected = Option.No<bool>();
             Assert.AreEqual(expected, result);

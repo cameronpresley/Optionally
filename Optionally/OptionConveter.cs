@@ -2,7 +2,7 @@
 
 namespace Optionally
 {
-    public static class Converter
+    public static class OptionConveter
     {
         public static Option<Int32> ToInt(string s)
         {
