@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConverterTests\WhenConvertingToAnInt.cs" />
     <Compile Include="IEnumerableExtensionsTests\WhenRetrievingFirst.cs" />
     <Compile Include="IEnumerableExtensionsTests\WhenRetrievingFirstByFilter.cs" />
     <Compile Include="NullableExtensionTests\WhenConvertingANullableToAnOption.cs" />
