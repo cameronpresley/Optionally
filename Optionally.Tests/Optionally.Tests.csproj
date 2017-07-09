@@ -46,6 +46,7 @@
     <Compile Include="ConverterTests\WhenConvertingToABool.cs" />
     <Compile Include="ConverterTests\WhenConvertingToADecimal.cs" />
     <Compile Include="ConverterTests\WhenConvertingToAnInt.cs" />
+    <Compile Include="ConverterTests\WhenConvertingToDateTime.cs" />
     <Compile Include="ConverterTests\WhenConvertingToDouble.cs" />
     <Compile Include="IEnumerableExtensionsTests\WhenRetrievingFirst.cs" />
     <Compile Include="IEnumerableExtensionsTests\WhenRetrievingFirstByFilter.cs" />
