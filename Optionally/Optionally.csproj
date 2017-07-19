@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OptionConveter.cs" />
     <Compile Include="IEnumerableExtensions.cs" />
     <Compile Include="NullableExtensions.cs" />
     <Compile Include="Option.cs" />
