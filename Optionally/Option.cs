@@ -77,5 +77,10 @@ namespace Optionally
             if (HasValue && filter(Value)) return Some(Value);
             return None;
         }
+
+        public override string ToString()
+        {
+            return HasValue ? $"Some {Value}" : "None";
+        }
     }
 }
