@@ -51,6 +51,7 @@
     <Compile Include="OptionTests\WhenBinding.cs" />
     <Compile Include="OptionTests\WhenConstructingNone.cs" />
     <Compile Include="OptionTests\WhenConstructingSome.cs" />
+    <Compile Include="OptionTests\WhenConvertingToString.cs" />
     <Compile Include="OptionTests\WhenFiltering.cs" />
     <Compile Include="OptionTests\WhenMapping.cs" />
     <Compile Include="OptionTests\WhenPerformingAnAction.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="ResultTests\WhenBinding.cs" />
     <Compile Include="ResultTests\WhenConstructingFailure.cs" />
     <Compile Include="ResultTests\WhenConstructingSuccess.cs" />
+    <Compile Include="ResultTests\WhenConvertingToString.cs" />
     <Compile Include="ResultTests\WhenMapping.cs" />
     <Compile Include="ResultTests\WhenPerformingAnAction.cs" />
   </ItemGroup>
