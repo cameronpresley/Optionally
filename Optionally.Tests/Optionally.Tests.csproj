@@ -61,6 +61,7 @@
     <Compile Include="ResultTests\WhenBinding.cs" />
     <Compile Include="ResultTests\WhenConstructingFailure.cs" />
     <Compile Include="ResultTests\WhenConstructingSuccess.cs" />
+    <Compile Include="ResultTests\WhenConvertingToString.cs" />
     <Compile Include="ResultTests\WhenMapping.cs" />
     <Compile Include="ResultTests\WhenPerformingAnAction.cs" />
   </ItemGroup>

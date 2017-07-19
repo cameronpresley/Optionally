@@ -81,5 +81,10 @@ namespace Optionally
             else
                 onFailure?.Invoke(FailureValue);
         }
+
+        public override string ToString()
+        {
+            return DidSucceed ? $"Success of '{SuccessValue}'" : $"Failure of '{FailureValue}'";
+        }
     }
 }
