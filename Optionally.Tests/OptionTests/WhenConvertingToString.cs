@@ -27,7 +27,7 @@ namespace Optionally.Tests.OptionTests
 
             var observed = some.ToString();
 
-            Assert.AreEqual("Some 5", observed);
+            Assert.AreEqual("Some of '5'", observed);
         }
     }
 }

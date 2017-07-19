@@ -80,7 +80,7 @@ namespace Optionally
 
         public override string ToString()
         {
-            return HasValue ? $"Some {Value}" : "None";
+            return HasValue ? $"Some of '{Value}'" : "None";
         }
     }
 }
