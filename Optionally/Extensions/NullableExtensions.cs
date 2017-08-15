@@ -1,4 +1,4 @@
-﻿namespace Optionally
+﻿namespace Optionally.Extensions
 {
     public static class NullableExtensions
     {

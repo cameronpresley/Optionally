@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
+using Optionally.Extensions;
 
-namespace Optionally.Tests.NullableExtensionTests
+namespace Optionally.Tests.Extensions.NullableExtensionTests
 {
     [TestFixture]
     class WhenConvertingANullableToAnOption

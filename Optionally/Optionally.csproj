@@ -40,8 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IEnumerableExtensions.cs" />
-    <Compile Include="NullableExtensions.cs" />
+    <Compile Include="Extensions\FunctionExtensions.cs" />
+    <Compile Include="Extensions\IEnumerableExtensions.cs" />
+    <Compile Include="Extensions\NullableExtensions.cs" />
     <Compile Include="Option.cs" />
     <Compile Include="OptionStaticWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

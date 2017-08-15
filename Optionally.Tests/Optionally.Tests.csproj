@@ -43,9 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IEnumerableExtensionsTests\WhenRetrievingFirst.cs" />
-    <Compile Include="IEnumerableExtensionsTests\WhenRetrievingFirstByFilter.cs" />
-    <Compile Include="NullableExtensionTests\WhenConvertingANullableToAnOption.cs" />
+    <Compile Include="Extensions\FunctionExtensionsTests\WhenWrappingInAResult.cs" />
+    <Compile Include="Extensions\FunctionExtensionsTests\WhenWrappingInAnOption.cs" />
+    <Compile Include="Extensions\IEnumerableExtensionsTests\WhenRetrievingFirst.cs" />
+    <Compile Include="Extensions\IEnumerableExtensionsTests\WhenRetrievingFirstByFilter.cs" />
+    <Compile Include="Extensions\NullableExtensionTests\WhenConvertingANullableToAnOption.cs" />
     <Compile Include="OptionTests\WhenApplyingThreeOptions.cs" />
     <Compile Include="OptionTests\WhenApplyingTwoOptions.cs" />
     <Compile Include="OptionTests\WhenBinding.cs" />
