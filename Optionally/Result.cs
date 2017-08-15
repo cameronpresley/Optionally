@@ -9,8 +9,8 @@ namespace Optionally
     /// <typeparam name="TSuccess">Type of success</typeparam>
     public struct Result<TFailure, TSuccess>
     {
-        internal readonly TSuccess SuccessValue;
         internal readonly TFailure FailureValue;
+        internal readonly TSuccess SuccessValue;
         internal readonly bool DidSucceed;
 
         private Result(TFailure failure, TSuccess success, bool didSucceed)

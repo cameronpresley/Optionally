@@ -35,8 +35,8 @@ namespace Optionally
         /// <summary>
         /// Applies a function to a series of Result arguments
         /// </summary>
-        /// <typeparam name="TSuccess">Type of Success</typeparam>
         /// <typeparam name="TFailure">Type of Failure</typeparam>
+        /// <typeparam name="TSuccess">Type of Success</typeparam>
         /// <typeparam name="T1">Type of the first argument</typeparam>
         /// <typeparam name="T2">Type of the second argument</typeparam>
         /// <typeparam name="T3">Type of the third argument</typeparam>
