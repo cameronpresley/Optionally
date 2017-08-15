@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
 using Optionally.Extensions;
 
@@ -14,12 +10,12 @@ namespace Optionally.Tests.Extensions.FunctionExtensionsTests
         [Test]
         public void AndFunctionThrowsExceptionThenNoneIsReturned()
         {
-            Func<int> throws = () => { throw new Exception("failboat"); };
+            Func<int> throws = () => throw new Exception("failboat");
 
-            var result = throws.WrapInOption();
+            var observed = throws.WrapInOption();
 
             var expected = Option.No<int>();
-            Assert.AreEqual(expected, result);
+            Assert.AreEqual(expected, observed);
         }
 
         [Test]
@@ -27,10 +23,10 @@ namespace Optionally.Tests.Extensions.FunctionExtensionsTests
         {
             Func<int> doesntThrow = () => 4;
 
-            var result = doesntThrow.WrapInOption();
+            var observed = doesntThrow.WrapInOption();
 
             var expected = Option.Some(4);
-            Assert.AreEqual(expected, result);
+            Assert.AreEqual(expected, observed);
         }
     }
 }

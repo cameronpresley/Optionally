@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\FunctionExtensionsTests\WhenWrappingInAResult.cs" />
     <Compile Include="Extensions\FunctionExtensionsTests\WhenWrappingInAnOption.cs" />
     <Compile Include="Extensions\IEnumerableExtensionsTests\WhenRetrievingFirst.cs" />
     <Compile Include="Extensions\IEnumerableExtensionsTests\WhenRetrievingFirstByFilter.cs" />
