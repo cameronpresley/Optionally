@@ -1,7 +1,8 @@
-﻿using NUnit.Framework;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using NUnit.Framework;
+using Optionally.Extensions;
 
-namespace Optionally.Tests.IEnumerableExtensionsTests
+namespace Optionally.Tests.Extensions.IEnumerableExtensionsTests
 {
     [TestFixture]
     class WhenRetrievingFirst
