@@ -28,7 +28,7 @@ namespace Optionally.Tests.ResultTests
 
             var observed = Result.Apply(add, first, second, third);
 
-            var expected = Result<int, IEnumerable<Exception>>.Success(add(2, 4, 8));
+            var expected = Result<IEnumerable<Exception>, int>.Success(add(2, 4, 8));
             Assert.AreEqual(expected, observed);
         }
 
@@ -164,14 +164,14 @@ namespace Optionally.Tests.ResultTests
         }
 
 
-        private Result<int, Exception> CreateSuccess(int i)
+        private Result<Exception, int> CreateSuccess(int i)
         {
-            return Result<int, Exception>.Success(i);
+            return Result<Exception, int>.Success(i);
         }
 
-        private Result<int, Exception> CreateFailure(Exception e)
+        private Result<Exception, int> CreateFailure(Exception e)
         {
-            return Result<int, Exception>.Failure(e);
+            return Result<Exception, int>.Failure(e);
         }
     }
 }

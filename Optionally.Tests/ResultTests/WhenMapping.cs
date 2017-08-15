@@ -14,9 +14,9 @@ namespace Optionally.Tests.ResultTests
         public void AndResultIsFailureThenFailureIsReturned()
         {
             var failure = new Exception();
-            var observed = Result<int, Exception>.Failure(failure).Map(x => x.ToString());
+            var observed = Result<Exception, int>.Failure(failure).Map(x => x.ToString());
 
-            var expected = Result<string, Exception>.Failure(failure);
+            var expected = Result<Exception, string>.Failure(failure);
             Assert.AreEqual(expected, observed);
         }
 
@@ -30,7 +30,7 @@ namespace Optionally.Tests.ResultTests
                 return i.ToString();
             };
 
-            Result<int, Exception>.Failure(new Exception()).Map(mapper);
+            Result<Exception, int>.Failure(new Exception()).Map(mapper);
 
             Assert.That(!wasMapperCalled);
         }
@@ -40,16 +40,16 @@ namespace Optionally.Tests.ResultTests
         {
             Func<int, string> mapper = i => i.ToString();
             var input = 2;
-            var observed = Result<int, Exception>.Success(input).Map(mapper);
+            var observed = Result<Exception, int>.Success(input).Map(mapper);
 
-            var expected = Result<string, Exception>.Success(mapper(input));
+            var expected = Result<Exception, string>.Success(mapper(input));
             Assert.AreEqual(expected, observed);
         }
 
         [Test]
         public void AndMapperIsNullThenAnExceptionIsThrown()
         {
-            Assert.Throws<ArgumentNullException>(() => Result<int, string>.Success(2).Map<string>(null));
+            Assert.Throws<ArgumentNullException>(() => Result<string, int>.Success(2).Map<string>(null));
         }
     }
 }
