@@ -57,7 +57,6 @@ namespace Optionally
         {
             if (onFailure == null) throw new ArgumentNullException(nameof(onFailure));
             if (onSuccess == null) throw new ArgumentNullException(nameof(onSuccess));
-
             onSuccess(Value);
         }
 
@@ -92,7 +91,6 @@ namespace Optionally
         {
             if (onFailure == null) throw new ArgumentNullException(nameof(onFailure));
             if (onSuccess == null) throw new ArgumentNullException(nameof(onSuccess));
-
             onFailure(Value);
         }
 

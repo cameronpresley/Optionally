@@ -18,7 +18,6 @@ namespace Optionally.Tests.ResultTests
 
             Result.Failure<Exception, string>(new Exception())
                 .Do(FailureAction, SuccessAction);
-
             Assert.That(wasFailureActionCalled);
         }
 
@@ -32,7 +31,6 @@ namespace Optionally.Tests.ResultTests
 
             Result.Success<Exception, int>(2)
                 .Do(FailureAction, SuccessAction);
-
             Assert.That(wasSuccessActionCalled);
         }
 
