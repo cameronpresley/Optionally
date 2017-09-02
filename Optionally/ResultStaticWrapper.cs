@@ -91,5 +91,15 @@ namespace Optionally
             var thirdIsSuccess = third is Success<TFailure, T3>;
             return firstIsSuccess && secondIsSuccess && thirdIsSuccess ? doSuccess() : doFailure();
         }
+
+        public static IResult<TFailure, TSuccess> Failure<TFailure, TSuccess>(TFailure value)
+        {
+            return new Failure<TFailure, TSuccess>(value);
+        }
+
+        public static IResult<TFailure, TSuccess> Success<TFailure, TSuccess>(TSuccess value)
+        {
+            return new Success<TFailure, TSuccess>(value);
+        }
     }
 }

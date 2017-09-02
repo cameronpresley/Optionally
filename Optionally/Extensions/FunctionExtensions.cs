@@ -16,15 +16,15 @@ namespace Optionally.Extensions
             }
         }
 
-        public static Result<Exception, T> WrapInResult<T>(this Func<T> func)
+        public static IResult<Exception, T> WrapInResult<T>(this Func<T> func)
         {
             try
             {
-                return Result<Exception, T>.Success(func());
+                return Result.Success<Exception, T>(func());
             }
             catch (Exception ex)
             {
-                return Result<Exception, T>.Failure(ex);
+                return Result.Failure<Exception, T>(ex);
             }
         }
     }
