@@ -80,11 +80,13 @@ namespace Optionally
     {
         public IOption<U> Map<U>(Func<T, U> mapper)
         {
+            if (mapper == null) throw new ArgumentNullException(nameof(mapper));
             return new None<U>();
         }
 
         public IOption<U> AndThen<U>(Func<T, IOption<U>> binder)
         {
+            if (binder == null) throw new ArgumentNullException(nameof(binder));
             return new None<U>();
         }
 
@@ -97,6 +99,7 @@ namespace Optionally
 
         public IOption<T> Where(Func<T, bool> filter)
         {
+            if (filter == null) throw new ArgumentNullException(nameof(filter));
             return this;
         }
 
