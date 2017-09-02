@@ -31,27 +31,15 @@ namespace Optionally.Tests.ResultTests
         }
 
         [Test]
-        public void AndSuccessAndSuccessActionIsNullThenNothingHappens()
+        public void AndSuccessAndSuccessActionIsNullThenAnExceptionIsThrown()
         {
-            Assert.DoesNotThrow(() => Result.Success<Exception, int>(2).Do(null, _ => { }));
+            Assert.Throws<ArgumentNullException>(() => Result.Success<Exception, int>(2).Do(null, _ => { }));
         }
 
         [Test]
-        public void AndFailureAndFailureActionIsNullThenNothingHappens()
+        public void AndFailureAndFailureActionIsNullThenAnExceptionIsThrown()
         {
-            Assert.DoesNotThrow(() => Result.Failure<Exception, int>(new Exception()).Do(_ => { }, null));
-        }
-
-        [Test]
-        public void AndSuccessAndBothActionsAreNullThenNothingHappens()
-        {
-            Assert.DoesNotThrow(() => Result.Success<Exception, int>(2).Do(null, null));
-        }
-
-        [Test]
-        public void AndFailureAndBothActionsAreNullTheNothingHappens()
-        {
-            Assert.DoesNotThrow(() => Result.Failure<Exception, int>(new Exception()).Do(null, null));
+            Assert.Throws<ArgumentNullException>(() => Result.Failure<Exception, int>(new Exception()).Do(_ => { }, null));
         }
     }
 }

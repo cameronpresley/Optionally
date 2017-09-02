@@ -57,6 +57,11 @@ namespace Optionally
 
             onSuccess(Value);
         }
+
+        public override string ToString()
+        {
+            return $"Success of '{Value}'";
+        }
     }
 
     internal struct Failure <TFailure, TSuccess> : IResult<TFailure, TSuccess>
@@ -85,6 +90,11 @@ namespace Optionally
             if (onSuccess == null) throw new ArgumentNullException(nameof(onSuccess));
             if (onFailure == null) throw new ArgumentNullException(nameof(onFailure));
             onFailure(Value);
+        }
+
+        public override string ToString()
+        {
+            return $"Failure of '{Value}'";
         }
     }
 }
