@@ -1,9 +1,5 @@
 ﻿using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Optionally.Tests.ResultTests
 {
@@ -24,13 +20,14 @@ namespace Optionally.Tests.ResultTests
         public void AndResultIsFailureThenMapperIsntCalled()
         {
             var wasMapperCalled = false;
-            Func<int, string> mapper = delegate (int i)
+
+            string Mapper(int i)
             {
                 wasMapperCalled = true;
                 return i.ToString();
-            };
+            }
 
-            Result.Failure<Exception, int>(new Exception()).Map(mapper);
+            Result.Failure<Exception, int>(new Exception()).Map(Mapper);
 
             Assert.That(!wasMapperCalled);
         }
@@ -38,18 +35,24 @@ namespace Optionally.Tests.ResultTests
         [Test]
         public void AndResultIsSuccessThenSuccessIsReturned()
         {
-            Func<int, string> mapper = i => i.ToString();
+            string Mapper(int i) => i.ToString();
             var input = 2;
-            var observed = Result.Success<Exception, int>(input).Map(mapper);
+            var observed = Result.Success<Exception, int>(input).Map(Mapper);
 
-            var expected = Result.Success<Exception, string>(mapper(input));
+            var expected = Result.Success<Exception, string>(Mapper(input));
             Assert.AreEqual(expected, observed);
         }
 
         [Test]
-        public void AndMapperIsNullThenAnExceptionIsThrown()
+        public void AndSuccessAndMapperIsNullThenAnExceptionIsThrown()
         {
             Assert.Throws<ArgumentNullException>(() => Result.Success<string, int>(2).Map<string>(null));
+        }
+
+        [Test]
+        public void AndFailureAndMapperIsNullThenAnExceptionIsThrown()
+        {
+            Assert.Throws<ArgumentNullException>(() => Result.Failure<string, int>("failure").Map<string>(null));
         }
     }
 }

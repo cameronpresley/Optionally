@@ -24,11 +24,11 @@ namespace Optionally.Tests.ResultTests
             var first = CreateSuccess(2);
             var second = CreateSuccess(4);
             var third = CreateSuccess(8);
-            Func<int, int, int, int> add = (a, b, c) => a + b + c;
+            int Add (int a, int b, int c) => a + b + c;
 
-            var observed = Result.Apply(add, first, second, third);
+            var observed = Result.Apply(Add, first, second, third);
 
-            var expected = Result.Success<IEnumerable<Exception>, int>(add(2, 4, 8));
+            var expected = Result.Success<IEnumerable<Exception>, int>(Add(2, 4, 8));
             Assert.AreEqual(expected, observed);
         }
 
@@ -42,9 +42,9 @@ namespace Optionally.Tests.ResultTests
             var thirdException = new Exception("third");
             var third = CreateFailure(thirdException);
 
-            Func<int, int, int, int> add = (a, b, c) => a + b + c;
+            int Add(int a, int b, int c) => a + b + c;
 
-            var observed = Result.Apply(add, first, second, third);
+            var observed = Result.Apply(Add, first, second, third);
 
             var expectedErrors = new List<Exception> { firstException, secondException, thirdException };
             observed.Do(
@@ -59,9 +59,9 @@ namespace Optionally.Tests.ResultTests
             var first = CreateFailure(firstException);
             var second = CreateSuccess(2);
             var third = CreateSuccess(4);
-            Func<int, int, int, int> add = (a, b, c) => a + b + c;
+            int Add(int a, int b, int c) => a + b + c;
 
-            var observed = Result.Apply(add, first, second, third);
+            var observed = Result.Apply(Add, first, second, third);
 
             var expectedErrors = new List<Exception> { firstException };
             observed.Do(
@@ -77,9 +77,9 @@ namespace Optionally.Tests.ResultTests
             var secondException = new Exception("second");
             var second = CreateFailure(secondException);
             var third = CreateSuccess(4);
-            Func<int, int, int, int> add = (a, b, c) => a + b + c;
+            int Add(int a, int b, int c) => a + b + c;
 
-            var observed = Result.Apply(add, first, second, third);
+            var observed = Result.Apply(Add, first, second, third);
 
             var expectedErrors = new List<Exception> { secondException };
             observed.Do(
@@ -95,9 +95,9 @@ namespace Optionally.Tests.ResultTests
             var second = CreateSuccess(4);
             var thirdException = new Exception("third");
             var third = CreateFailure(thirdException);
-            Func<int, int, int, int> add = (a, b, c) => a + b + c;
+            int Add(int a, int b, int c) => a + b + c;
 
-            var observed = Result.Apply(add, first, second, third);
+            var observed = Result.Apply(Add, first, second, third);
 
             var expectedErrors = new List<Exception> { thirdException };
             observed.Do(
@@ -114,9 +114,9 @@ namespace Optionally.Tests.ResultTests
             var secondException = new Exception("second");
             var second = CreateFailure(secondException);
             var third = CreateSuccess(4);
-            Func<int, int, int, int> add = (a, b, c) => a + b + c;
+            int Add(int a, int b, int c) => a + b + c;
 
-            var observed = Result.Apply(add, first, second, third);
+            var observed = Result.Apply(Add, first, second, third);
 
             var expectedErrors = new List<Exception> { firstException, secondException };
             observed.Do(
@@ -133,9 +133,9 @@ namespace Optionally.Tests.ResultTests
             var second = CreateFailure(secondException);
             var thirdException = new Exception("third");
             var third = CreateFailure(thirdException);
-            Func<int, int, int, int> add = (a, b, c) => a + b + c;
+            int Add(int a, int b, int c) => a + b + c;
 
-            var observed = Result.Apply(add, first, second, third);
+            var observed = Result.Apply(Add, first, second, third);
 
             var expectedErrors = new List<Exception> { secondException, thirdException };
             observed.Do(
@@ -152,9 +152,9 @@ namespace Optionally.Tests.ResultTests
             var second = CreateSuccess(2);
             var thirdException = new Exception("third");
             var third = CreateFailure(thirdException);
-            Func<int, int, int, int> add = (a, b, c) => a + b + c;
+            int Add(int a, int b, int c) => a + b + c;
 
-            var observed = Result.Apply(add, first, second, third);
+            var observed = Result.Apply(Add, first, second, third);
 
             var expectedErrors = new List<Exception> { firstException, thirdException };
             observed.Do(
@@ -163,6 +163,32 @@ namespace Optionally.Tests.ResultTests
                 );
         }
 
+        [Test]
+        public void AndTheFirstResultIsNullThenAnExceptionIsThrown()
+        {
+            int Add(int a, int b, int c) => a + b + c;
+            IResult<Exception, int> nullResult = null;
+
+            Assert.Throws<ArgumentNullException>(() => Result.Apply(Add, nullResult, CreateSuccess(2), CreateSuccess(4)));
+        }
+
+        [Test]
+        public void AndTheSecondResultIsNullThenAnExceptionIsThrown()
+        {
+            int Add(int a, int b, int c) => a + b + c;
+            IResult<Exception, int> nullResult = null;
+
+            Assert.Throws<ArgumentNullException>(() => Result.Apply(Add, CreateSuccess(2), nullResult, CreateSuccess(4)));
+        }
+
+        [Test]
+        public void AndTheThirdResultIsNullThenAnExceptionIsThrown()
+        {
+            int Add(int a, int b, int c) => a + b + c;
+            IResult<Exception, int> nullResult = null;
+
+            Assert.Throws<ArgumentNullException>(() => Result.Apply(Add, CreateSuccess(2), CreateSuccess(4), nullResult));
+        }
 
         private IResult<Exception, int> CreateSuccess(int i)
         {

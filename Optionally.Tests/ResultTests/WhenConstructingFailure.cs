@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 
 namespace Optionally.Tests.ResultTests
 {
@@ -8,10 +9,7 @@ namespace Optionally.Tests.ResultTests
         [Test]
         public void AndTheValueIsNullThenFailureIsReturned()
         {
-            var observed = Result.Failure<string, int>(null);
-
-            var expected = Result.Failure<string, int>(null);
-            Assert.AreEqual(expected, observed);
+            Assert.Throws<ArgumentNullException>(() => Result.Failure<string, int>(null));
         }
 
         [Test]

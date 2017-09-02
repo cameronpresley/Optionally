@@ -29,7 +29,7 @@ namespace Optionally
             {
                 var firstValue = ((Success<TFailure, T1>)first).Value;
                 var secondValue = ((Success<TFailure, T2>)second).Value;
-                return new Success<IEnumerable<TFailure>, TResult>(func(firstValue, secondValue));
+                return Success<IEnumerable<TFailure>, TResult>(func(firstValue, secondValue));
             }
 
             IResult<IEnumerable<TFailure>, TResult> doFailure()
@@ -38,7 +38,7 @@ namespace Optionally
                 void addError(TFailure error) => errors.Add(error);
                 first.Do(_ => { }, addError);
                 second.Do(_ => { }, addError);
-                return new Failure<IEnumerable<TFailure>, TResult>(errors);
+                return Failure<IEnumerable<TFailure>, TResult>(errors);
             }
 
             var firstIsSuccess = first is Success<TFailure, T1>;
@@ -73,7 +73,7 @@ namespace Optionally
                 var firstValue = ((Success<TFailure, T1>)first).Value;
                 var secondValue = ((Success<TFailure, T2>)second).Value;
                 var thirdValue = ((Success<TFailure, T3>) third).Value;
-                return new Success<IEnumerable<TFailure>, TResult>(func(firstValue, secondValue, thirdValue));
+                return Success<IEnumerable<TFailure>, TResult>(func(firstValue, secondValue, thirdValue));
             }
 
             IResult<IEnumerable<TFailure>, TResult> doFailure()
@@ -83,22 +83,25 @@ namespace Optionally
                 first.Do(_ => { }, addError);
                 second.Do(_ => { }, addError);
                 third.Do(_ => { }, addError);
-                return new Failure<IEnumerable<TFailure>, TResult>(errors);
+                return Failure<IEnumerable<TFailure>, TResult>(errors);
             }
 
             var firstIsSuccess = first is Success<TFailure, T1>;
             var secondIsSuccess = second is Success<TFailure, T2>;
             var thirdIsSuccess = third is Success<TFailure, T3>;
+
             return firstIsSuccess && secondIsSuccess && thirdIsSuccess ? doSuccess() : doFailure();
         }
 
         public static IResult<TFailure, TSuccess> Failure<TFailure, TSuccess>(TFailure value)
         {
+            if (value == null) throw new ArgumentNullException(nameof(value));
             return new Failure<TFailure, TSuccess>(value);
         }
 
         public static IResult<TFailure, TSuccess> Success<TFailure, TSuccess>(TSuccess value)
         {
+            if (value == null) throw new ArgumentNullException(nameof(value));
             return new Success<TFailure, TSuccess>(value);
         }
     }

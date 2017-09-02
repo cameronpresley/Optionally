@@ -41,7 +41,7 @@ namespace Optionally
         public IResult<TFailure, U> Map<U>(Func<TSuccess, U> mapper)
         {
             if (mapper == null) throw new ArgumentNullException(nameof(mapper));
-            return new Success<TFailure, U>(mapper(Value));
+            return Result.Success<TFailure, U>(mapper(Value));
         }
 
         public IResult<TFailure, U> AndThen<U>(Func<TSuccess, IResult<TFailure, U>> binder)
@@ -76,13 +76,13 @@ namespace Optionally
         public IResult<TFailure, U> Map<U>(Func<TSuccess, U> mapper)
         {
             if (mapper == null) throw new ArgumentNullException(nameof(mapper));
-            return new Failure<TFailure, U>(Value);
+            return Result.Failure<TFailure, U>(Value);
         }
 
         public IResult<TFailure, U> AndThen<U>(Func<TSuccess, IResult<TFailure, U>> binder)
         {
             if (binder == null) throw new ArgumentNullException(nameof(binder));
-            return new Failure<TFailure, U>(Value);
+            return Result.Failure<TFailure, U>(Value);
         }
 
         public void Do(Action<TSuccess> onSuccess, Action<TFailure> onFailure)
