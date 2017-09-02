@@ -93,12 +93,27 @@ namespace Optionally
             return firstIsSuccess && secondIsSuccess && thirdIsSuccess ? doSuccess() : doFailure();
         }
 
+        /// <summary>
+        /// Converts a value to a Failure Result
+        /// </summary>
+        /// <typeparam name="TFailure"></typeparam>
+        /// <typeparam name="TSuccess"></typeparam>
+        /// <param name="value">Value to wrap in Failure</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <returns></returns>
         public static IResult<TFailure, TSuccess> Failure<TFailure, TSuccess>(TFailure value)
         {
             if (value == null) throw new ArgumentNullException(nameof(value));
             return new Failure<TFailure, TSuccess>(value);
         }
-
+        /// <summary>
+        /// Converts a value to a Success Result
+        /// </summary>
+        /// <typeparam name="TFailure"></typeparam>
+        /// <typeparam name="TSuccess"></typeparam>
+        /// <param name="value">Value to wrap in Success</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <returns></returns>
         public static IResult<TFailure, TSuccess> Success<TFailure, TSuccess>(TSuccess value)
         {
             if (value == null) throw new ArgumentNullException(nameof(value));

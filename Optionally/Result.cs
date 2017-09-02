@@ -9,6 +9,7 @@ namespace Optionally
         /// </summary>
         /// <typeparam name="U">Type of the new Success</typeparam>
         /// <param name="mapper">How to convert the Success value</param>
+        /// <exception cref="ArgumentNullException"></exception>
         /// <returns>If Result is a Success, then Success is returned. Otherwise a Failure is returned</returns>
         IResult<TFailure, U> Map<U>(Func<TSuccess, U> mapper);
 
@@ -18,6 +19,7 @@ namespace Optionally
         /// <typeparam name="U">Type of the Result from binder</typeparam>
         /// <param name="binder">Function to call if current Result is a Success</param>
         /// <returns>If Result is a Success, then binder is called with the success value. Otherwise, None is returned</returns>
+        /// <exception cref="ArgumentNullException"></exception>
         /// <remarks>Provides a monadic approach to data validation</remarks>
         IResult<TFailure, U> AndThen<U>(Func<TSuccess, IResult<TFailure, U>> binder);
 
@@ -26,6 +28,7 @@ namespace Optionally
         /// </summary>
         /// <param name="onSuccess">Action to call if Result is a Success</param>
         /// <param name="onFailure">Action to call if Result is a Failure</param>
+        /// <exception cref="ArgumentNullException"></exception>
         void Do(Action<TSuccess> onSuccess, Action<TFailure> onFailure);
     }
 
