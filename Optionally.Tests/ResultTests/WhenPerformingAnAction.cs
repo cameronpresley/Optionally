@@ -17,7 +17,7 @@ namespace Optionally.Tests.ResultTests
             void FailureAction(Exception e) => wasFailureActionCalled = true;
 
             Result.Failure<Exception, string>(new Exception())
-                .Do(SuccessAction, FailureAction);
+                .Do(FailureAction, SuccessAction);
 
             Assert.That(wasFailureActionCalled);
         }
@@ -31,7 +31,7 @@ namespace Optionally.Tests.ResultTests
                 "Result is success, should not be calling failure with input of " + e);
 
             Result.Success<Exception, int>(2)
-                .Do(SuccessAction, FailureAction);
+                .Do(FailureAction, SuccessAction);
 
             Assert.That(wasSuccessActionCalled);
         }

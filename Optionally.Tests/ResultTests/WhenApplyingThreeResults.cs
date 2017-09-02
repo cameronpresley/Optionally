@@ -48,8 +48,8 @@ namespace Optionally.Tests.ResultTests
 
             var expectedErrors = new List<Exception> { firstException, secondException, thirdException };
             observed.Do(
-                i => Assert.Fail("Result should be Failure, not Success with value of " + i),
-                errors => CollectionAssert.AreEqual(expectedErrors, errors));
+                errors => CollectionAssert.AreEqual(expectedErrors, errors),
+                i => Assert.Fail("Result should be Failure, not Success with value of " + i));
         }
 
         [Test]
@@ -65,9 +65,8 @@ namespace Optionally.Tests.ResultTests
 
             var expectedErrors = new List<Exception> { firstException };
             observed.Do(
-                i => Assert.Fail("Result should be Failure, not Success with value of " + i),
-                errors => CollectionAssert.AreEqual(expectedErrors, errors)
-                );
+                errors => CollectionAssert.AreEqual(expectedErrors, errors),
+                i => Assert.Fail("Result should be Failure, not Success with value of " + i));
         }
 
         [Test]
@@ -83,9 +82,8 @@ namespace Optionally.Tests.ResultTests
 
             var expectedErrors = new List<Exception> { secondException };
             observed.Do(
-                i => Assert.Fail("Result should be Failure, not Success with value of " + i),
-                errors => CollectionAssert.AreEqual(expectedErrors, errors)
-                );
+                errors => CollectionAssert.AreEqual(expectedErrors, errors),
+                i => Assert.Fail("Result should be Failure, not Success with value of " + i));
         }
 
         [Test]
@@ -101,9 +99,8 @@ namespace Optionally.Tests.ResultTests
 
             var expectedErrors = new List<Exception> { thirdException };
             observed.Do(
-                i => Assert.Fail("Result should be Failure, not Success with value of " + i),
-                errors => CollectionAssert.AreEqual(expectedErrors, errors)
-                );
+                errors => CollectionAssert.AreEqual(expectedErrors, errors),
+                i => Assert.Fail("Result should be Failure, not Success with value of " + i));
         }
 
         [Test]
@@ -120,9 +117,8 @@ namespace Optionally.Tests.ResultTests
 
             var expectedErrors = new List<Exception> { firstException, secondException };
             observed.Do(
-                i => Assert.Fail("Result should be Failure, not Success with value of " + i),
-                errors => CollectionAssert.AreEqual(expectedErrors, errors)
-                );
+                errors => CollectionAssert.AreEqual(expectedErrors, errors),
+                i => Assert.Fail("Result should be Failure, not Success with value of " + i));
         }
 
         [Test]
@@ -139,9 +135,8 @@ namespace Optionally.Tests.ResultTests
 
             var expectedErrors = new List<Exception> { secondException, thirdException };
             observed.Do(
-                i => Assert.Fail("Result should be Failure, not Success with value of " + i),
-                errors => CollectionAssert.AreEqual(expectedErrors, errors)
-                );
+                errors => CollectionAssert.AreEqual(expectedErrors, errors),
+                i => Assert.Fail("Result should be Failure, not Success with value of " + i));
         }
 
         [Test]
@@ -158,9 +153,8 @@ namespace Optionally.Tests.ResultTests
 
             var expectedErrors = new List<Exception> { firstException, thirdException };
             observed.Do(
-                i => Assert.Fail("Result should be Failure, not Success with value of " + i),
-                errors => CollectionAssert.AreEqual(expectedErrors, errors)
-                );
+                errors => CollectionAssert.AreEqual(expectedErrors, errors),
+                i => Assert.Fail("Result should be Failure, not Success with value of " + i));
         }
 
         [Test]

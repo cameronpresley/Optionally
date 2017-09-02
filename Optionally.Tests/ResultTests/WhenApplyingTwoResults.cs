@@ -29,8 +29,9 @@ namespace Optionally.Tests.ResultTests
 
             var expectedErrors = new List<Exception> { exception };
             observed
-                .Do(funcResult => Assert.Fail("Result should not be Success with value of " + funcResult), 
-                    errors => CollectionAssert.AreEqual(expectedErrors, errors));
+                .Do(
+                    errors => CollectionAssert.AreEqual(expectedErrors, errors),
+                    funcResult => Assert.Fail("Result should not be Success with value of " + funcResult));
         }
 
         [Test]
@@ -45,8 +46,7 @@ namespace Optionally.Tests.ResultTests
 
             var expectedErrors = new List<Exception> { exception };
             observed
-                .Do(funcResult => Assert.Fail("Result should not be Success with value of " + funcResult),
-                    errors => CollectionAssert.AreEqual(expectedErrors, errors));
+                .Do(errors => CollectionAssert.AreEqual(expectedErrors, errors), funcResult => Assert.Fail("Result should not be Success with value of " + funcResult));
         }
 
         [Test]
@@ -60,10 +60,11 @@ namespace Optionally.Tests.ResultTests
 
             var observed = Result.Apply(Add, first, second);
 
-            var expectedErrors = new List<Exception> { firstException, secondException};
+            var expectedErrors = new List<Exception> { firstException, secondException };
             observed
-                .Do(funcResult => Assert.Fail("Result should not be Success with value of " + funcResult),
-                    errors => CollectionAssert.AreEqual(expectedErrors, errors));
+                .Do(
+                    errors => CollectionAssert.AreEqual(expectedErrors, errors),
+                    funcResult => Assert.Fail("Result should not be Success with value of " + funcResult));
         }
 
         [Test]
@@ -97,12 +98,12 @@ namespace Optionally.Tests.ResultTests
             Assert.Throws<ArgumentNullException>(() => Result.Apply(Add, CreateSuccess(2), second));
         }
 
-        private IResult<Exception, int>CreateFailure(Exception e)
+        private IResult<Exception, int> CreateFailure(Exception e)
         {
             return Result.Failure<Exception, int>(e);
         }
 
-        private IResult<Exception, int>CreateSuccess(int i)
+        private IResult<Exception, int> CreateSuccess(int i)
         {
             return Result.Success<Exception, int>(i);
         }
