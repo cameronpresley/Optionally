@@ -4,7 +4,7 @@ namespace Optionally.Extensions
 {
     public static class FunctionExtensions
     {
-        public static Option<T> WrapInOption<T>(this Func<T> func)
+        public static IOption<T> WrapInOption<T>(this Func<T> func)
         {
             try
             {

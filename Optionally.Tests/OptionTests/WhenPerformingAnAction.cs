@@ -9,47 +9,49 @@ namespace Optionally.Tests.OptionTests
         [Test]
         public void AndSomeThenTheSomeActionIsCalled()
         {
-            var wasSomeActionCalled = false;
-            Action<int> someAction = i => wasSomeActionCalled = true;
+            var someActionWasCalled = false;
+            void SomeAction(int i) => someActionWasCalled = true;
+            void NoneAction () => Assert.Fail("Option is Some, should not call None action.");
 
-            Option.Some(4).Do(someAction, () => Assert.Fail("Option is Some, should not call None action"));
+            Option.Some(4).Do(SomeAction, NoneAction);
 
-            Assert.That(wasSomeActionCalled);
+            Assert.That(someActionWasCalled);
         }
 
         [Test]
         public void AndNoneThenNoneActionIsCalled()
         {
             var wasNoneActionCalled = false;
-            Action noneAction = () => wasNoneActionCalled = true;
+            void NoneAction () => wasNoneActionCalled = true;
+            void SomeAction(int i) => Assert.Fail("Option is None, should not call Some action with param of " + i);
 
-            Option.No<int>().Do(x => Assert.Fail("Option is None, should not call Some action with param of " + x), noneAction);
+            Option.No<int>().Do(SomeAction, NoneAction);
 
             Assert.That(wasNoneActionCalled);
         }
 
         [Test]
-        public void AndSomeAndSomeActionIsNullThenNothingHappens()
+        public void AndSomeAndSomeActionIsNullThenAnExcpetionIsThrown()
         {
-            Assert.DoesNotThrow(() => Option.Some(4).Do(null, () => { }));
+            Assert.Throws<ArgumentNullException>(() => Option.Some(4).Do(null, () => { }));
         }
 
         [Test]
-        public void AndNoneAndNoneActionIsNullThenNothingHappens()
+        public void AndSomeAndNoneActionIsNullThenAnExceptionIsThrown()
         {
-            Assert.DoesNotThrow(() => Option.No<int>().Do(_ => { }, null));
+            Assert.Throws<ArgumentNullException>(() => Option.Some(4).Do(i => { }, null));
         }
 
         [Test]
-        public void AndNoneAndBothActionsAreNullThenNothingHappens()
+        public void AndNoneAndSomeActionIsNullThenAnExceptionIsThrown()
         {
-            Assert.DoesNotThrow(() => Option.No<int>().Do(null, null));
+            Assert.Throws<ArgumentNullException>(() => Option.No<int>().Do(null, () => {}));
         }
 
         [Test]
-        public void AndSomeAndBothActionsAreNullThenNothingHappens()
+        public void AndNoneAndNoneActionIsNullThenAnExceptionIsThrown()
         {
-            Assert.DoesNotThrow(() => Option.Some(2).Do(null, null));
+            Assert.Throws<ArgumentNullException>(() => Option.No<int>().Do(_ => { }, null));
         }
     }
 }

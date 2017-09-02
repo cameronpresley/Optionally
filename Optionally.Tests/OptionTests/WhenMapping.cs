@@ -7,17 +7,17 @@ namespace Optionally.Tests.OptionTests
     class WhenMapping
     {
         [Test]
-        public void AndTheOptionIsNoneThenNoneIsReturned()
+        public void AndNoneThenNoneIsReturned()
         {
             var observed = Option.No<int>().Map(x => x + 2);
 
-            var expected = Option.No<int>();;
+            var expected = Option.No<int>();
 
             Assert.AreEqual(expected, observed);
         }
 
         [Test]
-        public void AndTheOptionIsNoneThenMapIsntCalled()
+        public void AndNoneThenMapIsntCalled()
         {
             var mapperWasCalled = false;
             Option.No<int>().Map(delegate (int x)
@@ -33,21 +33,24 @@ namespace Optionally.Tests.OptionTests
         public void AndTheOptionSomeThenSomeIsReturned()
         {
             var input = 4;
-            Func<int, string> mapper = i => i.ToString();
+            int Square(int i) => i * i;
 
-            var observed = Option.Some(input).Map(mapper);
+            var observed = Option.Some(input).Map(Square);
 
-            var expected = Option.Some(mapper(input));
+            var expected = Option.Some(Square(input));
             Assert.AreEqual(expected, observed);
         }
 
         [Test]
-        public void AndTheMapperIsNullThenNoneIsReturned()
+        public void AndTheMapperIsNullThenAnExceptionIsThrown()
         {
-            var observed = Option.Some(2).Map<string>(null);
+            Assert.Throws<ArgumentNullException>(() => Option.Some(2).Map<string>(null));
+        }
 
-            var expected = Option.No<string>();
-            Assert.AreEqual(expected, observed);
+        [Test]
+        public void AndNoneAndMapperIsNullThenAnExceptionIsThrown()
+        {
+            Assert.Throws<ArgumentNullException>(() => Option.No<int>().Map<string>(null));
         }
     }
 }
