@@ -9,7 +9,7 @@ namespace Optionally
         /// <summary>
         /// Apply a function to a series of Result arguments
         /// </summary>
-        /// <typeparam name="TSuccess">Type of Success</typeparam>
+        /// <typeparam name="TResult">Type of Success</typeparam>
         /// <typeparam name="TFailure">Type of Failure</typeparam>
         /// <typeparam name="T1">Type of the first argument</typeparam>
         /// <typeparam name="T2">Type of the second argument</typeparam>
@@ -19,24 +19,38 @@ namespace Optionally
         /// <returns>If all arguments are Success, then Success is returned. Otherwise, a Failure with all the argument Failures is returned</returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <remarks>Provides an applicative style of data validation</remarks>
-        public static Result<IEnumerable<TFailure>, TSuccess> Apply<TSuccess, TFailure, T1, T2>(Func<T1, T2, TSuccess> func, Result<TFailure, T1> first, Result<TFailure, T2> second)
+        public static IResult<IEnumerable<TFailure>, TResult> Apply<TResult, TFailure, T1, T2>(Func<T1, T2, TResult> func, IResult<TFailure, T1> first, IResult<TFailure, T2> second)
         {
             if (func == null) throw new ArgumentNullException(nameof(func));
+            if (first == null) throw new ArgumentNullException(nameof(first));
+            if (second == null) throw new ArgumentNullException(nameof(second));
 
-            if (first.DidSucceed && second.DidSucceed)
-                return Result<IEnumerable<TFailure>, TSuccess>.Success(func(first.SuccessValue, second.SuccessValue));
+            IResult<IEnumerable<TFailure>, TResult> doSuccess()
+            {
+                var firstValue = ((Success<TFailure, T1>)first).Value;
+                var secondValue = ((Success<TFailure, T2>)second).Value;
+                return Success<IEnumerable<TFailure>, TResult>(func(firstValue, secondValue));
+            }
 
-            var errors = new List<TFailure>();
-            if (!first.DidSucceed) errors.Add(first.FailureValue);
-            if (!second.DidSucceed) errors.Add(second.FailureValue);
-            return Result<IEnumerable<TFailure>, TSuccess>.Failure(errors);
+            IResult<IEnumerable<TFailure>, TResult> doFailure()
+            {
+                var errors = new List<TFailure>();
+                void addError(TFailure error) => errors.Add(error);
+                first.Do(_ => { }, addError);
+                second.Do(_ => { }, addError);
+                return Failure<IEnumerable<TFailure>, TResult>(errors);
+            }
+
+            var firstIsSuccess = first is Success<TFailure, T1>;
+            var secondIsSuccess = second is Success<TFailure, T2>;
+            return firstIsSuccess && secondIsSuccess ? doSuccess() : doFailure();
         }
 
         /// <summary>
         /// Applies a function to a series of Result arguments
         /// </summary>
         /// <typeparam name="TFailure">Type of Failure</typeparam>
-        /// <typeparam name="TSuccess">Type of Success</typeparam>
+        /// <typeparam name="TResult">Type of Success</typeparam>
         /// <typeparam name="T1">Type of the first argument</typeparam>
         /// <typeparam name="T2">Type of the second argument</typeparam>
         /// <typeparam name="T3">Type of the third argument</typeparam>
@@ -46,19 +60,64 @@ namespace Optionally
         /// <param name="third">Third argument for the function</param>
         /// <returns>If all arguments are Success, then a Success is returned. Otherwise, all the Failures are concatentated into a Failure Result</returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public static Result<IEnumerable<TFailure>, TSuccess> Apply<TSuccess, TFailure,T1, T2, T3>(Func<T1, T2, T3, TSuccess> func, Result<TFailure, T1> first, Result<TFailure, T2> second, Result<TFailure, T3> third)
+        public static IResult<IEnumerable<TFailure>, TResult> Apply<TResult, TFailure, T1, T2, T3>(Func<T1, T2, T3, TResult> func, IResult<TFailure, T1> first, IResult<TFailure, T2> second, IResult<TFailure, T3> third)
         {
             if (func == null) throw new ArgumentNullException(nameof(func));
+            if (first == null) throw new ArgumentNullException(nameof(first));
+            if (second == null) throw new ArgumentNullException(nameof(second));
+            if (third == null) throw new ArgumentNullException(nameof(third));
 
-            if (first.DidSucceed && second.DidSucceed && third.DidSucceed)
-                return Result<IEnumerable<TFailure>, TSuccess>.Success(func(first.SuccessValue, second.SuccessValue, third.SuccessValue));
 
-            var errors = new List<TFailure>();
-            if (!first.DidSucceed) errors.Add(first.FailureValue);
-            if (!second.DidSucceed) errors.Add(second.FailureValue);
-            if (!third.DidSucceed) errors.Add(third.FailureValue);
+            IResult<IEnumerable<TFailure>, TResult> doSuccess()
+            {
+                var firstValue = ((Success<TFailure, T1>)first).Value;
+                var secondValue = ((Success<TFailure, T2>)second).Value;
+                var thirdValue = ((Success<TFailure, T3>) third).Value;
+                return Success<IEnumerable<TFailure>, TResult>(func(firstValue, secondValue, thirdValue));
+            }
 
-            return Result<IEnumerable<TFailure>, TSuccess>.Failure(errors);
+            IResult<IEnumerable<TFailure>, TResult> doFailure()
+            {
+                var errors = new List<TFailure>();
+                void addError(TFailure error) => errors.Add(error);
+                first.Do(_ => { }, addError);
+                second.Do(_ => { }, addError);
+                third.Do(_ => { }, addError);
+                return Failure<IEnumerable<TFailure>, TResult>(errors);
+            }
+
+            var firstIsSuccess = first is Success<TFailure, T1>;
+            var secondIsSuccess = second is Success<TFailure, T2>;
+            var thirdIsSuccess = third is Success<TFailure, T3>;
+
+            return firstIsSuccess && secondIsSuccess && thirdIsSuccess ? doSuccess() : doFailure();
+        }
+
+        /// <summary>
+        /// Converts a value to a Failure Result
+        /// </summary>
+        /// <typeparam name="TFailure"></typeparam>
+        /// <typeparam name="TSuccess"></typeparam>
+        /// <param name="value">Value to wrap in Failure</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <returns></returns>
+        public static IResult<TFailure, TSuccess> Failure<TFailure, TSuccess>(TFailure value)
+        {
+            if (value == null) throw new ArgumentNullException(nameof(value));
+            return new Failure<TFailure, TSuccess>(value);
+        }
+        /// <summary>
+        /// Converts a value to a Success Result
+        /// </summary>
+        /// <typeparam name="TFailure"></typeparam>
+        /// <typeparam name="TSuccess"></typeparam>
+        /// <param name="value">Value to wrap in Success</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <returns></returns>
+        public static IResult<TFailure, TSuccess> Success<TFailure, TSuccess>(TSuccess value)
+        {
+            if (value == null) throw new ArgumentNullException(nameof(value));
+            return new Success<TFailure, TSuccess>(value);
         }
     }
 }

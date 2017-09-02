@@ -23,9 +23,9 @@ namespace Optionally.Tests.ResultTests
             var exception = new Exception();
             var first = CreateFailure(exception);
             var second = CreateSuccess(2);
-            Func<int, int, int> add = (a, b) => a + b;
+            int Add(int a, int b) => a + b;
 
-            var observed = Result.Apply(add, first, second);
+            var observed = Result.Apply(Add, first, second);
 
             var expectedErrors = new List<Exception> { exception };
             observed
@@ -39,9 +39,9 @@ namespace Optionally.Tests.ResultTests
             var first = CreateSuccess(2);
             var exception = new Exception();
             var second = CreateFailure(exception);
-            Func<int, int, int> add = (a, b) => a + b;
+            int Add(int a, int b) => a + b;
 
-            var observed = Result.Apply(add, first, second);
+            var observed = Result.Apply(Add, first, second);
 
             var expectedErrors = new List<Exception> { exception };
             observed
@@ -56,9 +56,9 @@ namespace Optionally.Tests.ResultTests
             var first = CreateFailure(firstException);
             var secondException = new Exception("Neither was this one.");
             var second = CreateFailure(secondException);
-            Func<int, int, int> add = (a, b) => a + b;
+            int Add(int a, int b) => a + b;
 
-            var observed = Result.Apply(add, first, second);
+            var observed = Result.Apply(Add, first, second);
 
             var expectedErrors = new List<Exception> { firstException, secondException};
             observed
@@ -71,22 +71,40 @@ namespace Optionally.Tests.ResultTests
         {
             var first = CreateSuccess(2);
             var second = CreateSuccess(4);
-            Func<int, int, int> add = (a, b) => a + b;
+            int Add(int a, int b) => a + b;
 
-            var observed = Result.Apply(add, first, second);
+            var observed = Result.Apply(Add, first, second);
 
-            var expected = Result<IEnumerable<Exception>, int>.Success(add(2, 4));
+            var expected = Result.Success<IEnumerable<Exception>, int>(Add(2, 4));
             Assert.AreEqual(expected, observed);
         }
 
-        private Result<Exception, int>CreateFailure(Exception e)
+        [Test]
+        public void AndTheFirstResultIsNullThenAnExceptionIsThrown()
         {
-            return Result<Exception, int>.Failure(e);
+            int Add(int a, int b) => a + b;
+            IResult<Exception, int> first = null;
+
+            Assert.Throws<ArgumentNullException>(() => Result.Apply(Add, first, CreateSuccess(2)));
         }
 
-        private Result<Exception, int>CreateSuccess(int i)
+        [Test]
+        public void AndTheSecondResultIsNullThenAnExceptionIsThrown()
         {
-            return Result<Exception, int>.Success(i);
+            int Add(int a, int b) => a + b;
+            IResult<Exception, int> second = null;
+
+            Assert.Throws<ArgumentNullException>(() => Result.Apply(Add, CreateSuccess(2), second));
+        }
+
+        private IResult<Exception, int>CreateFailure(Exception e)
+        {
+            return Result.Failure<Exception, int>(e);
+        }
+
+        private IResult<Exception, int>CreateSuccess(int i)
+        {
+            return Result.Success<Exception, int>(i);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Optionally.Tests.ResultTests
         [Test]
         public void AndTheResultIsFailureThenFailureStringIsReturned()
         {
-            var result = Result<string, int>.Failure("failed result");
+            var result = Result.Failure<string, int>("failed result");
 
             Assert.AreEqual("Failure of 'failed result'", result.ToString());
         }
@@ -16,7 +16,7 @@ namespace Optionally.Tests.ResultTests
         [Test]
         public void AndTheResultIsSuccessThenSuccessStringIsReturned()
         {
-            var result = Result<string, int>.Success(10);
+            var result = Result.Success<string, int>(10);
 
             Assert.AreEqual("Success of '10'", result.ToString());
         }

@@ -10,10 +10,14 @@ namespace Optionally.Tests.ResultTests
         public void AndFailureThenFailureActionIsCalled()
         {
             var wasFailureActionCalled = false;
-            Action<Exception> failureAction = e => wasFailureActionCalled = true;
 
-            Result<Exception, string>.Failure(new Exception())
-                .Do(s => Assert.Fail("Result is failure, should not be calling Success with input of " + s), failureAction);
+            void SuccessAction(string s) => Assert.Fail(
+                "Result is failure, should not be calling Success with input of " + s);
+
+            void FailureAction(Exception e) => wasFailureActionCalled = true;
+
+            Result.Failure<Exception, string>(new Exception())
+                .Do(SuccessAction, FailureAction);
 
             Assert.That(wasFailureActionCalled);
         }
@@ -22,36 +26,43 @@ namespace Optionally.Tests.ResultTests
         public void AndSuccessThenSuccessActionIsCalled()
         {
             var wasSuccessActionCalled = false;
-            Action<int> successAction = i => wasSuccessActionCalled = true;
+            void SuccessAction(int i) => wasSuccessActionCalled = true;
+            void FailureAction(Exception e) => Assert.Fail(
+                "Result is success, should not be calling failure with input of " + e);
 
-            Result<Exception, int>.Success(2)
-                .Do(successAction, e => Assert.Fail("Result is success, should not be calling failure with input of " + e));
+            Result.Success<Exception, int>(2)
+                .Do(SuccessAction, FailureAction);
 
             Assert.That(wasSuccessActionCalled);
         }
 
         [Test]
-        public void AndSuccessAndSuccessActionIsNullThenNothingHappens()
+        public void AndSuccessAndSuccessActionIsNullThenAnExceptionIsThrown()
         {
-            Assert.DoesNotThrow(() => Result<Exception, int>.Success(2).Do(null, _ => { }));
+            Assert.Throws<ArgumentNullException>(() => Result.Success<Exception, int>(2).Do(null, _ => { }));
         }
 
         [Test]
-        public void AndFailureAndFailureActionIsNullThenNothingHappens()
+        public void AndSuccessAndFailureActionIsNullThenAnExceptionIsThrown()
         {
-            Assert.DoesNotThrow(() => Result<Exception, int>.Failure(new Exception()).Do(_ => { }, null));
+            Assert.Throws<ArgumentNullException>(() => Result.Success<Exception, int>(5).Do(_ => { }, null));
         }
 
         [Test]
-        public void AndSuccessAndBothActionsAreNullThenNothingHappens()
+        public void AndFailureAndSuccessActionIsNullThenAnExceptionIsThrown()
         {
-            Assert.DoesNotThrow(() => Result<Exception, int>.Success(2).Do(null, null));
+            Assert.Throws<ArgumentNullException>(
+                () =>
+                    Result
+                    .Failure<Exception, int>(new Exception())
+                    .Do(null, _ => { })
+            );
         }
 
         [Test]
-        public void AndFailureAndBothActionsAreNullTheNothingHappens()
+        public void AndFailureAndFailureActionIsNullThenAnExceptionIsThrown()
         {
-            Assert.DoesNotThrow(() => Result<Exception, int>.Failure(new Exception()).Do(null, null));
+            Assert.Throws<ArgumentNullException>(() => Result.Failure<Exception, int>(new Exception()).Do(_ => { }, null));
         }
     }
 }
