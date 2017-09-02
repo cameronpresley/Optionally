@@ -46,12 +46,33 @@ namespace Optionally.Tests.OptionTests
         }
 
         [Test]
-        public void AndTheFunctionIsNullThenNoneIsReturned()
+        public void AndTheFunctionIsNullTheAnExceptionIsThrown()
         {
             var first = Option.Some(2);
             var second = Option.Some(4);
+            Func<int, int, int> nullFunc = null;
 
-            Assert.Throws<ArgumentNullException>(() => Option.Apply((Func<int, int, int>)null, first, second));
+            Assert.Throws<ArgumentNullException>(() => Option.Apply(nullFunc, first, second));
+        }
+
+        [Test]
+        public void AndTheFirstParamIsNullThenAnExceptionIsThrown()
+        {
+            var first = (IOption<int>) null;
+            var second = Option.Some(4);
+            int Add(int a, int b) => a + b;
+
+            Assert.Throws<ArgumentNullException>(() => Option.Apply(Add, first, second));
+        }
+
+        [Test]
+        public void AndTheSecondParamIsNullThenAnExceptionIsThrown()
+        {
+            var first = Option.Some(4);
+            var second = (IOption<int>) null;
+            int Add(int a, int b) => a + b;
+
+            Assert.Throws<ArgumentNullException>(() => Option.Apply(Add, first, second));
         }
     }
 }
