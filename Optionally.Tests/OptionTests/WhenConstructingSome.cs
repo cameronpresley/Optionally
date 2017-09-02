@@ -15,8 +15,7 @@ namespace Optionally.Tests.OptionTests
         [Test]
         public void AndTheValueIsNotNullThenSomeIsConstructed()
         {
-            var input = 4;
-            var observed = Option.Some(input);
+            var observed = Option.Some(4);
 
             var expected = Option.Some(4);
             Assert.AreEqual(expected, observed);

@@ -11,7 +11,7 @@ namespace Optionally.Tests.OptionTests
         {
             var observed = Option.No<int>().Where(_ => true);
 
-            var expected = Option.No<int>();;
+            var expected = Option.No<int>();
             Assert.AreEqual(expected, observed);
         }
 
@@ -34,9 +34,15 @@ namespace Optionally.Tests.OptionTests
         }
 
         [Test]
-        public void AndFilterIsNullThenAnExceptionIsThrown()
+        public void AndSomeAndFilterIsNullThenAnExceptionIsThrown()
         {
             Assert.Throws<ArgumentNullException>(() => Option.Some(2).Where(null));
+        }
+
+        [Test]
+        public void AndNoneAndFilterIsNullThenAnExceptionIsThrown()
+        {
+            Assert.Throws<ArgumentNullException>(() => Option.No<int>().Where(null));
         }
     }
 }
