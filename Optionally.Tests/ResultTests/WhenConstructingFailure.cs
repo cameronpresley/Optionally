@@ -8,18 +8,18 @@ namespace Optionally.Tests.ResultTests
         [Test]
         public void AndTheValueIsNullThenFailureIsReturned()
         {
-            var observed = Result<string, int>.Failure(null);
+            var observed = Result.Failure<string, int>(null);
 
-            var expected = Result<string, int>.Failure(null);
+            var expected = Result.Failure<string, int>(null);
             Assert.AreEqual(expected, observed);
         }
 
         [Test]
         public void AndTheValueIsNotNullThenFailureIsReturned()
         {
-            var observed = Result<string, int>.Failure("Whoops");
+            var observed = Result.Failure<string, int>("Whoops");
 
-            var expected = Result<string, int>.Failure("Whoops");
+            var expected = Result.Failure<string, int>("Whoops");
             Assert.AreEqual(expected, observed);
         }
     }

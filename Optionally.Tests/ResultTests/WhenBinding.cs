@@ -9,12 +9,12 @@ namespace Optionally.Tests.ResultTests
         [Test]
         public void AndResultIsFailureThenFailureIsReturned()
         {
-            Func<int, Result<Exception, string>> binder = num => Result<Exception, string>.Success(num.ToString());
+            Func<int, IResult<Exception, string>> binder = num => Result.Success<Exception, string>(num.ToString());
             var input = new Exception();
 
-            var observed = Result<Exception, int>.Failure(input).AndThen(binder);
+            var observed = Result.Failure<Exception, int>(input).AndThen(binder);
 
-            var expected = Result<Exception, string>.Failure(input);
+            var expected = Result.Failure<Exception, string>(input);
             Assert.AreEqual(expected, observed);
         }
 
@@ -22,13 +22,13 @@ namespace Optionally.Tests.ResultTests
         public void AndResultIsFailureThenBinderIsntCalled()
         {
             var wasBinderCalled = false;
-            Func<int, Result<Exception, string>> binder = delegate (int number)
+            Func<int, IResult<Exception, string>> binder = delegate (int number)
             {
                 wasBinderCalled = true;
-                return Result<Exception, string>.Success(number.ToString());
+                return Result.Success<Exception, string>(number.ToString());
             };
 
-            Result<Exception, int>.Failure(new Exception()).AndThen(binder);
+            Result.Failure<Exception, int>(new Exception()).AndThen(binder);
 
             Assert.That(!wasBinderCalled);
         }
@@ -37,13 +37,13 @@ namespace Optionally.Tests.ResultTests
         public void AndResultIsSuccessThenBinderIsCalled()
         {
             var wasBinderCalled = false;
-            Func<int, Result<Exception, string>> binder = delegate
+            Func<int, IResult<Exception, string>> binder = delegate
             {
                 wasBinderCalled = true;
-                return Result<Exception, string>.Failure(new Exception());
+                return Result.Failure<Exception, string>(new Exception());
             };
 
-            Result<Exception, int>.Success(2).AndThen(binder);
+            Result.Success<Exception, int>(2).AndThen(binder);
 
             Assert.That(wasBinderCalled);
         }
@@ -51,7 +51,7 @@ namespace Optionally.Tests.ResultTests
         [Test]
         public void AndBinderIsNullThenAnExceptionIsThrown()
         {
-            Assert.Throws<ArgumentNullException>(() => Result<string, int>.Success(2).AndThen<Exception>(null));
+            Assert.Throws<ArgumentNullException>(() => Result.Success<string, int>(2).AndThen<Exception>(null));
         }
     }
 }

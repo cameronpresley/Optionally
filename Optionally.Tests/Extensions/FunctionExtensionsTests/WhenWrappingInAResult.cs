@@ -15,7 +15,7 @@ namespace Optionally.Tests.Extensions.FunctionExtensionsTests
 
             var result = throws.WrapInResult();
 
-            var expected = Result<Exception, int>.Failure(exception);
+            var expected = Result.Failure<Exception, int>(exception);
             Assert.AreEqual(expected, result);
         }
 
@@ -26,7 +26,7 @@ namespace Optionally.Tests.Extensions.FunctionExtensionsTests
 
             var result = doesntThrow.WrapInResult();
 
-            var expected = Result<Exception, int>.Success(4);
+            var expected = Result.Success<Exception, int>(4);
             Assert.AreEqual(expected, result);
         }
     }
