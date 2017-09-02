@@ -42,12 +42,9 @@ namespace Optionally.Tests.OptionTests
         }
 
         [Test]
-        public void AndTheMapperIsNullThenNoneIsReturned()
+        public void AndTheMapperIsNullThenAnExceptionIsThrown()
         {
-            var observed = Option.Some(2).Map<string>(null);
-
-            var expected = Option.No<string>();
-            Assert.AreEqual(expected, observed);
+            Assert.Throws<ArgumentNullException>(() => Option.Some(2).Map<string>(null));
         }
     }
 }

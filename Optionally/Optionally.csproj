@@ -43,11 +43,14 @@
     <Compile Include="Extensions\FunctionExtensions.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\NullableExtensions.cs" />
-    <Compile Include="Option.cs" />
+    <Compile Include="Options.cs" />
     <Compile Include="OptionStaticWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Result.cs" />
     <Compile Include="ResultStaticWrapper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Result\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

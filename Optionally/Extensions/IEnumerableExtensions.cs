@@ -12,7 +12,7 @@ namespace Optionally.Extensions
         /// <typeparam name="T"></typeparam>
         /// <param name="enumerable"></param>
         /// <returns>None if the list is empty or null, Some(T) otherwise</returns>
-        public static Option<T> TryFirst<T>(this IEnumerable<T> enumerable)
+        public static IOption<T> TryFirst<T>(this IEnumerable<T> enumerable)
         {
             if (enumerable == null) return Option.No<T>();
             foreach (var v in enumerable)
@@ -30,7 +30,7 @@ namespace Optionally.Extensions
         /// <param name="enumerable"></param>
         /// <param name="filter"></param>
         /// <returns>None if the enumerable or filter is null. None if filter produces an empty IEnumerable, otherwise Some(T)</returns>
-        public static Option<T> TryFirst<T>(this IEnumerable<T> enumerable, Func<T, bool> filter)
+        public static IOption<T> TryFirst<T>(this IEnumerable<T> enumerable, Func<T, bool> filter)
         {
             if (filter == null) throw new ArgumentNullException(nameof(filter));
             return enumerable.Where(filter).TryFirst();

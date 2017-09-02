@@ -19,7 +19,7 @@ namespace Optionally.Tests.OptionTests
         public void AndOptionIsSomeAndTheBinderIsCalled()
         {
             var binderWasCalled = false;
-            Func<int, Option<string>> binder = delegate (int i)
+            Func<int, IOption<string>> binder = delegate (int i)
             {
                 binderWasCalled = true;
                 return Option.No<string>();
@@ -31,12 +31,9 @@ namespace Optionally.Tests.OptionTests
         }
 
         [Test]
-        public void AndBinderIsNullThenNoneIsReturned()
+        public void AndBinderIsNullThenAnExceptionIsThrown()
         {
-            var result = Option.Some(4).AndThen<string>(null);
-
-            var expected = Option.No<string>();
-            Assert.AreEqual(expected, result);
+            Assert.Throws<ArgumentNullException>(() => Option.Some(4).AndThen<string>(null));
         }
     }
 }

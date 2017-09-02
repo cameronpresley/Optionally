@@ -29,27 +29,27 @@ namespace Optionally.Tests.OptionTests
         }
 
         [Test]
-        public void AndSomeAndSomeActionIsNullThenNothingHappens()
+        public void AndSomeAndSomeActionIsNullThenAnExcpetionIsThrown()
         {
-            Assert.DoesNotThrow(() => Option.Some(4).Do(null, () => { }));
+            Assert.Throws<ArgumentNullException>(() => Option.Some(4).Do(null, () => { }));
         }
 
         [Test]
-        public void AndNoneAndNoneActionIsNullThenNothingHappens()
+        public void AndNoneAndNoneActionIsNullThenAnExceptionIsThrown()
         {
-            Assert.DoesNotThrow(() => Option.No<int>().Do(_ => { }, null));
+            Assert.Throws<ArgumentNullException>(() => Option.No<int>().Do(_ => { }, null));
         }
 
         [Test]
-        public void AndNoneAndBothActionsAreNullThenNothingHappens()
+        public void AndNoneAndBothActionsAreNullThenAnExceptionIsThrown()
         {
-            Assert.DoesNotThrow(() => Option.No<int>().Do(null, null));
+            Assert.Throws<ArgumentNullException>(() => Option.No<int>().Do(null, null));
         }
 
         [Test]
-        public void AndSomeAndBothActionsAreNullThenNothingHappens()
+        public void AndSomeAndBothActionsAreNullThenAnExceptionIsThrown()
         {
-            Assert.DoesNotThrow(() => Option.Some(2).Do(null, null));
+            Assert.Throws<ArgumentNullException>(() => Option.Some(2).Do(null, null));
         }
     }
 }
