@@ -36,8 +36,8 @@ namespace Optionally
             {
                 var errors = new List<TFailure>();
                 void addError(TFailure error) => errors.Add(error);
-                first.Do(_ => { }, addError);
-                second.Do(_ => { }, addError);
+                first.Do(addError, _ => { });
+                second.Do(addError, _ => { });
                 return Failure<IEnumerable<TFailure>, TResult>(errors);
             }
 
@@ -80,9 +80,9 @@ namespace Optionally
             {
                 var errors = new List<TFailure>();
                 void addError(TFailure error) => errors.Add(error);
-                first.Do(_ => { }, addError);
-                second.Do(_ => { }, addError);
-                third.Do(_ => { }, addError);
+                first.Do(addError, _ => { });
+                second.Do(addError, _ => { });
+                third.Do(addError, _ => { });
                 return Failure<IEnumerable<TFailure>, TResult>(errors);
             }
 

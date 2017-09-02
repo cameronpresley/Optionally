@@ -26,10 +26,10 @@ namespace Optionally
         /// <summary>
         /// Perform an action on the current Result
         /// </summary>
-        /// <param name="onSuccess">Action to call if Result is a Success</param>
         /// <param name="onFailure">Action to call if Result is a Failure</param>
+        /// <param name="onSuccess">Action to call if Result is a Success</param>
         /// <exception cref="ArgumentNullException"></exception>
-        void Do(Action<TSuccess> onSuccess, Action<TFailure> onFailure);
+        void Do(Action<TFailure> onFailure, Action<TSuccess> onSuccess);
     }
 
     internal struct Success <TFailure, TSuccess> : IResult<TFailure, TSuccess>
@@ -53,11 +53,10 @@ namespace Optionally
             return binder(Value);
         }
 
-        public void Do(Action<TSuccess> onSuccess, Action<TFailure> onFailure)
+        public void Do(Action<TFailure> onFailure, Action<TSuccess> onSuccess)
         {
-            if (onSuccess == null) throw new ArgumentNullException(nameof(onSuccess));
             if (onFailure == null) throw new ArgumentNullException(nameof(onFailure));
-
+            if (onSuccess == null) throw new ArgumentNullException(nameof(onSuccess));
             onSuccess(Value);
         }
 
@@ -88,10 +87,10 @@ namespace Optionally
             return Result.Failure<TFailure, U>(Value);
         }
 
-        public void Do(Action<TSuccess> onSuccess, Action<TFailure> onFailure)
+        public void Do(Action<TFailure> onFailure, Action<TSuccess> onSuccess)
         {
-            if (onSuccess == null) throw new ArgumentNullException(nameof(onSuccess));
             if (onFailure == null) throw new ArgumentNullException(nameof(onFailure));
+            if (onSuccess == null) throw new ArgumentNullException(nameof(onSuccess));
             onFailure(Value);
         }
 
