@@ -13,7 +13,7 @@ namespace Optionally.Tests.OptionTests
             void SomeAction(int i) => someActionWasCalled = true;
             void NoneAction () => Assert.Fail("Option is Some, should not call None action.");
 
-            Option.Some(4).Do(SomeAction, NoneAction);
+            Option.Some(4).Do(NoneAction, SomeAction);
 
             Assert.That(someActionWasCalled);
         }
@@ -25,7 +25,7 @@ namespace Optionally.Tests.OptionTests
             void NoneAction () => wasNoneActionCalled = true;
             void SomeAction(int i) => Assert.Fail("Option is None, should not call Some action with param of " + i);
 
-            Option.No<int>().Do(SomeAction, NoneAction);
+            Option.No<int>().Do(NoneAction, SomeAction);
 
             Assert.That(wasNoneActionCalled);
         }
@@ -33,25 +33,25 @@ namespace Optionally.Tests.OptionTests
         [Test]
         public void AndSomeAndSomeActionIsNullThenAnExcpetionIsThrown()
         {
-            Assert.Throws<ArgumentNullException>(() => Option.Some(4).Do(null, () => { }));
+            Assert.Throws<ArgumentNullException>(() => Option.Some(4).Do(() => { }, null));
         }
 
         [Test]
         public void AndSomeAndNoneActionIsNullThenAnExceptionIsThrown()
         {
-            Assert.Throws<ArgumentNullException>(() => Option.Some(4).Do(i => { }, null));
+            Assert.Throws<ArgumentNullException>(() => Option.Some(4).Do(null, i => { }));
         }
 
         [Test]
         public void AndNoneAndSomeActionIsNullThenAnExceptionIsThrown()
         {
-            Assert.Throws<ArgumentNullException>(() => Option.No<int>().Do(null, () => {}));
+            Assert.Throws<ArgumentNullException>(() => Option.No<int>().Do(() => { }, null));
         }
 
         [Test]
         public void AndNoneAndNoneActionIsNullThenAnExceptionIsThrown()
         {
-            Assert.Throws<ArgumentNullException>(() => Option.No<int>().Do(_ => { }, null));
+            Assert.Throws<ArgumentNullException>(() => Option.No<int>().Do(null, _ => { }));
         }
     }
 }

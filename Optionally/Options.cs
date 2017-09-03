@@ -24,9 +24,9 @@ namespace Optionally
         /// <summary>
         /// Performs an Action on the current Option
         /// </summary>
-        /// <param name="ifSome">Function to call if Option is Some</param>
         /// <param name="ifNone">Function to call if Option is None</param>
-        void Do(Action<T> ifSome, Action ifNone);
+        /// <param name="ifSome">Function to call if Option is Some</param>
+        void Do(Action ifNone, Action<T> ifSome);
 
         /// <summary>
         /// Check if Option fulfills the filter
@@ -56,7 +56,7 @@ namespace Optionally
             return binder(Value);
         }
 
-        public void Do(Action<T> ifSome, Action ifNone)
+        public void Do(Action ifNone, Action<T> ifSome)
         {
             if (ifSome == null) throw new ArgumentNullException(nameof(ifSome));
             if (ifNone == null) throw new ArgumentNullException(nameof(ifNone));
@@ -90,7 +90,7 @@ namespace Optionally
             return new None<U>();
         }
 
-        public void Do(Action<T> ifSome, Action ifNone)
+        public void Do(Action ifNone, Action<T> ifSome)
         {
             if (ifSome == null) throw new ArgumentNullException(nameof(ifSome));
             if (ifNone == null) throw new ArgumentNullException(nameof(ifNone));
