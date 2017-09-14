@@ -35,6 +35,13 @@ namespace Optionally
         /// <returns>If Option is Some and the value fulfills the filter, then Some. Otherwise None</returns>
         IOption<T> Where(Func<T, bool> filter);
 
+        /// <summary>
+        /// Performs a Fuunction on the current Options
+        /// </summary>
+        /// <typeparam name="U">Type to convert to</typeparam>
+        /// <param name="ifNone">Function to call if Option is None</param>
+        /// <param name="ifSome">Function to call if Option is None</param>
+        /// <returns></returns>
         U Match<U>(Func<U> ifNone, Func<T, U> ifSome);
     }
 
