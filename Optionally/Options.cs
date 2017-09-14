@@ -34,6 +34,8 @@ namespace Optionally
         /// <param name="filter">Predicate used to test Option</param>
         /// <returns>If Option is Some and the value fulfills the filter, then Some. Otherwise None</returns>
         IOption<T> Where(Func<T, bool> filter);
+
+        U Match<U>(Func<U> ifNone, Func<T, U> ifSome);
     }
 
     internal struct Some<T> : IOption<T>
@@ -70,6 +72,14 @@ namespace Optionally
             return filter(Value) ? (IOption<T>)this : new None<T>();
         }
 
+        public U Match<U>(Func<U> ifNone, Func<T,U> ifSome)
+        {
+            if (ifSome == null) throw new ArgumentNullException(nameof(ifSome));
+            if (ifNone == null) throw new ArgumentNullException(nameof(ifNone));
+
+            return ifSome(Value);
+        }
+
         public override string ToString()
         {
             return $"Some of '{Value}'";
@@ -101,6 +111,14 @@ namespace Optionally
         {
             if (filter == null) throw new ArgumentNullException(nameof(filter));
             return this;
+        }
+
+        public U Match<U>(Func<U> ifNone, Func<T, U> ifSome)
+        {
+            if (ifSome == null) throw new ArgumentNullException(nameof(ifSome));
+            if (ifNone == null) throw new ArgumentNullException(nameof(ifNone));
+
+            return ifNone();
         }
 
         public override string ToString()

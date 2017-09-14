@@ -56,6 +56,7 @@
     <Compile Include="OptionTests\WhenConvertingToString.cs" />
     <Compile Include="OptionTests\WhenFiltering.cs" />
     <Compile Include="OptionTests\WhenMapping.cs" />
+    <Compile Include="OptionTests\WhenMatching.cs" />
     <Compile Include="OptionTests\WhenPerformingAnAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResultTests\WhenApplyingThreeResults.cs" />
