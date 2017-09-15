@@ -36,7 +36,7 @@ namespace Optionally
         IOption<T> Where(Func<T, bool> filter);
 
         /// <summary>
-        /// Performs a Fuunction on the current Options
+        /// Performs a Function on the current Option
         /// </summary>
         /// <typeparam name="U">Type to convert to</typeparam>
         /// <param name="ifNone">Function to call if Option is None</param>
