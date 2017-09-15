@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/i7dkrhyx33km0l8c?svg=true)](https://ci.appveyor.com/project/cameronpresley/optionally)
+
 # Optionally
 An implementation of Option and Result for .NET
 
