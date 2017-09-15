@@ -40,7 +40,7 @@ namespace Optionally
         /// </summary>
         /// <typeparam name="U">Type to convert to</typeparam>
         /// <param name="ifNone">Function to call if Option is None</param>
-        /// <param name="ifSome">Function to call if Option is None</param>
+        /// <param name="ifSome">Function to call if Option is Some</param>
         /// <returns></returns>
         U Match<U>(Func<U> ifNone, Func<T, U> ifSome);
     }
