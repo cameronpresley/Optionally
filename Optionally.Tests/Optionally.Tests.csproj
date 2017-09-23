@@ -66,6 +66,7 @@
     <Compile Include="ResultTests\WhenConvertingToString.cs" />
     <Compile Include="ResultTests\WhenMapping.cs" />
     <Compile Include="ResultTests\WhenPerformingAnAction.cs" />
+    <Compile Include="ResultTests\WhenWrapping.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
