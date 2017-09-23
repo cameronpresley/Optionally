@@ -65,6 +65,24 @@ namespace Optionally
         }
 
         /// <summary>
+        /// Wrap an exception throwing function into an Option.
+        /// </summary>
+        /// <param name="func"></param>
+        /// <returns>Some(T) if the function succeeds, None otherwise</returns>
+        /// <remarks>Useful for when working with functions that might throw and you want to convert exceptions into None</remarks>
+        public static IOption<T> Wrap<T>(Func<T> func)
+        {
+            try
+            {
+                return Some(func());
+            }
+            catch
+            {
+                return No<T>();
+            }
+        }
+
+        /// <summary>
         /// Creates an Option with no value inside
         /// </summary>
         /// <typeparam name="T"></typeparam>
