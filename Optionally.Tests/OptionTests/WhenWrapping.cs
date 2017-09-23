@@ -20,12 +20,19 @@ namespace Optionally.Tests.OptionTests
         [Test]
         public void AndTheFuncReturnsAValueThenSomeValueIsReturned()
         {
-            int GetNumber() => 2;
+            var funcWasCalled = false;
+
+            int GetNumber()
+            {
+                funcWasCalled = true;
+                return 2;
+            }
 
             var observed = Option.Wrap(GetNumber);
 
             var expected = Option.Some(2);
             Assert.AreEqual(expected, observed);
+            Assert.That(funcWasCalled);
         }
 
         [Test]
