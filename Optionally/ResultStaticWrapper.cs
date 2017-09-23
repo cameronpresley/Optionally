@@ -94,6 +94,24 @@ namespace Optionally
         }
 
         /// <summary>
+        /// Wrap an exception throwing function into a Result.
+        /// </summary>
+        /// <param name="func"></param>
+        /// <returns>Success(T) if the function succeeds, Failure otherwise</returns>
+        /// <remarks>Useful for when working with functions that might throw and you want to convert exceptions into Failures</remarks>
+        public static IResult<Exception, T> Wrap<T>(Func<T> func)
+        {
+            try
+            {
+                return Success<Exception, T>(func());
+            }
+            catch (Exception ex)
+            {
+                return Failure<Exception, T>(ex);
+            }
+        }
+
+        /// <summary>
         /// Converts a value to a Failure Result
         /// </summary>
         /// <typeparam name="TFailure"></typeparam>
