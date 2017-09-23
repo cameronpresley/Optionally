@@ -30,6 +30,15 @@ namespace Optionally
         /// <param name="onSuccess">Action to call if Result is a Success</param>
         /// <exception cref="ArgumentNullException"></exception>
         void Do(Action<TFailure> onFailure, Action<TSuccess> onSuccess);
+
+        /// <summary>
+        /// Converts Result to T
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="onFailure"></param>
+        /// <param name="onSuccess"></param>
+        /// <returns></returns>
+        T Match<T>(Func<TFailure, T> onFailure, Func<TSuccess, T> onSuccess);
     }
 
     internal struct Success <TFailure, TSuccess> : IResult<TFailure, TSuccess>
@@ -58,6 +67,14 @@ namespace Optionally
             if (onFailure == null) throw new ArgumentNullException(nameof(onFailure));
             if (onSuccess == null) throw new ArgumentNullException(nameof(onSuccess));
             onSuccess(Value);
+        }
+
+        public T Match<T>(Func<TFailure, T> onFailure, Func<TSuccess, T> onSuccess)
+        {
+            if (onFailure == null) throw new ArgumentNullException(nameof(onFailure));
+            if (onSuccess == null) throw new ArgumentNullException(nameof(onSuccess));
+
+            return onSuccess(Value);
         }
 
         public override string ToString()
@@ -92,6 +109,14 @@ namespace Optionally
             if (onFailure == null) throw new ArgumentNullException(nameof(onFailure));
             if (onSuccess == null) throw new ArgumentNullException(nameof(onSuccess));
             onFailure(Value);
+        }
+
+        public T Match<T>(Func<TFailure, T> onFailure, Func<TSuccess, T> onSuccess)
+        {
+            if (onFailure == null) throw new ArgumentNullException(nameof(onFailure));
+            if (onSuccess == null) throw new ArgumentNullException(nameof(onSuccess));
+
+            return onFailure(Value);
         }
 
         public override string ToString()
