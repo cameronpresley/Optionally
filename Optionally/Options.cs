@@ -26,7 +26,7 @@ namespace Optionally
         /// </summary>
         /// <param name="ifNone">Function to call if Option is None</param>
         /// <param name="ifSome">Function to call if Option is Some</param>
-        void Do(Action ifNone, Action<T> ifSome);
+        IOption<T> Do(Action ifNone, Action<T> ifSome);
 
         /// <summary>
         /// Check if Option fulfills the filter
@@ -65,12 +65,13 @@ namespace Optionally
             return binder(Value);
         }
 
-        public void Do(Action ifNone, Action<T> ifSome)
+        public IOption<T> Do(Action ifNone, Action<T> ifSome)
         {
             if (ifSome == null) throw new ArgumentNullException(nameof(ifSome));
             if (ifNone == null) throw new ArgumentNullException(nameof(ifNone));
 
             ifSome(Value);
+            return this;
         }
 
         public IOption<T> Where(Func<T, bool> filter)
@@ -107,11 +108,13 @@ namespace Optionally
             return new None<U>();
         }
 
-        public void Do(Action ifNone, Action<T> ifSome)
+        public IOption<T> Do(Action ifNone, Action<T> ifSome)
         {
             if (ifSome == null) throw new ArgumentNullException(nameof(ifSome));
             if (ifNone == null) throw new ArgumentNullException(nameof(ifNone));
+
             ifNone();
+            return this;
         }
 
         public IOption<T> Where(Func<T, bool> filter)

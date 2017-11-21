@@ -29,7 +29,7 @@ namespace Optionally
         /// <param name="onFailure">Action to call if Result is a Failure</param>
         /// <param name="onSuccess">Action to call if Result is a Success</param>
         /// <exception cref="ArgumentNullException"></exception>
-        void Do(Action<TFailure> onFailure, Action<TSuccess> onSuccess);
+        IResult<TFailure, TSuccess> Do(Action<TFailure> onFailure, Action<TSuccess> onSuccess);
 
         /// <summary>
         /// Converts Result to T
@@ -62,11 +62,12 @@ namespace Optionally
             return binder(Value);
         }
 
-        public void Do(Action<TFailure> onFailure, Action<TSuccess> onSuccess)
+        public IResult<TFailure, TSuccess> Do(Action<TFailure> onFailure, Action<TSuccess> onSuccess)
         {
             if (onFailure == null) throw new ArgumentNullException(nameof(onFailure));
             if (onSuccess == null) throw new ArgumentNullException(nameof(onSuccess));
             onSuccess(Value);
+            return this;
         }
 
         public T Match<T>(Func<TFailure, T> onFailure, Func<TSuccess, T> onSuccess)
@@ -104,11 +105,12 @@ namespace Optionally
             return Result.Failure<TFailure, U>(Value);
         }
 
-        public void Do(Action<TFailure> onFailure, Action<TSuccess> onSuccess)
+        public IResult<TFailure, TSuccess> Do(Action<TFailure> onFailure, Action<TSuccess> onSuccess)
         {
             if (onFailure == null) throw new ArgumentNullException(nameof(onFailure));
             if (onSuccess == null) throw new ArgumentNullException(nameof(onSuccess));
             onFailure(Value);
+            return this;
         }
 
         public T Match<T>(Func<TFailure, T> onFailure, Func<TSuccess, T> onSuccess)
