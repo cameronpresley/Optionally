@@ -14,6 +14,16 @@ namespace Optionally
         IResult<TFailure, U> Map<U>(Func<TSuccess, U> mapper);
 
         /// <summary>
+        /// Converts both the Failure and Success type of the Result
+        /// </summary>
+        /// <typeparam name="UFailure"></typeparam>
+        /// <typeparam name="USuccess"></typeparam>
+        /// <param name="mapFailure">Function to map the failure</param>
+        /// <param name="mapSuccess">Function to map the success</param>
+        /// <returns></returns>
+        IResult<UFailure, USuccess> BiMap<UFailure, USuccess>(Func<TFailure, UFailure> mapFailure, Func<TSuccess, USuccess> mapSuccess);
+       
+        /// <summary>
         /// Chains a Success Result with a function call
         /// </summary>
         /// <typeparam name="U">Type of the Result from binder</typeparam>
@@ -54,6 +64,11 @@ namespace Optionally
         {
             if (mapper == null) throw new ArgumentNullException(nameof(mapper));
             return Result.Success<TFailure, U>(mapper(Value));
+        }
+
+        public IResult<UFailure, USuccess> BiMap<UFailure, USuccess>(Func<TFailure, UFailure> mapFailure, Func<TSuccess, USuccess> mapSuccess)
+        {
+            return Result.Success<UFailure, USuccess>(mapSuccess(Value));
         }
 
         public IResult<TFailure, U> AndThen<U>(Func<TSuccess, IResult<TFailure, U>> binder)
@@ -97,6 +112,11 @@ namespace Optionally
         {
             if (mapper == null) throw new ArgumentNullException(nameof(mapper));
             return Result.Failure<TFailure, U>(Value);
+        }
+
+        public IResult<UFailure, USuccess> BiMap<UFailure, USuccess>(Func<TFailure, UFailure> mapFailure, Func<TSuccess, USuccess> mapSuccess)
+        {
+            return Result.Failure<UFailure, USuccess>(mapFailure(Value));
         }
 
         public IResult<TFailure, U> AndThen<U>(Func<TSuccess, IResult<TFailure, U>> binder)
