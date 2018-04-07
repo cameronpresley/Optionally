@@ -1,86 +1,22 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2379CE12-BAED-471D-961D-858F547B7090}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Optionally.Tests</RootNamespace>
-    <AssemblyName>Optionally.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+    <TargetFrameworks>net452;net461;net471;netcoreapp2.0</TargetFrameworks>
+
+    <IsPackable>false</IsPackable>
+
+    <Authors>Cameron Presley</Authors>
+    <Company />
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="nunit.framework, Version=3.7.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.3.7.1\lib\net45\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
+  <PackageReference Include="NUnit" Version="3.9.0" />
+  <PackageReference Include="NUnit3TestAdapter" Version="3.9.0" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="Extensions\IEnumerableExtensionsTests\WhenRetrievingFirst.cs" />
-    <Compile Include="Extensions\IEnumerableExtensionsTests\WhenRetrievingFirstByFilter.cs" />
-    <Compile Include="Extensions\NullableExtensionTests\WhenConvertingANullableToAnOption.cs" />
-    <Compile Include="OptionTests\WhenApplyingThreeOptions.cs" />
-    <Compile Include="OptionTests\WhenApplyingTwoOptions.cs" />
-    <Compile Include="OptionTests\WhenBinding.cs" />
-    <Compile Include="OptionTests\WhenConstructingNone.cs" />
-    <Compile Include="OptionTests\WhenConstructingSome.cs" />
-    <Compile Include="OptionTests\WhenConvertingToString.cs" />
-    <Compile Include="OptionTests\WhenFiltering.cs" />
-    <Compile Include="OptionTests\WhenMapping.cs" />
-    <Compile Include="OptionTests\WhenMatching.cs" />
-    <Compile Include="OptionTests\WhenPerformingAnAction.cs" />
-    <Compile Include="OptionTests\WhenWrapping.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResultTests\WhenApplyingThreeResults.cs" />
-    <Compile Include="ResultTests\WhenApplyingTwoResults.cs" />
-    <Compile Include="ResultTests\WhenBiMapping.cs" />
-    <Compile Include="ResultTests\WhenBinding.cs" />
-    <Compile Include="ResultTests\WhenConstructingFailure.cs" />
-    <Compile Include="ResultTests\WhenConstructingSuccess.cs" />
-    <Compile Include="ResultTests\WhenConvertingToString.cs" />
-    <Compile Include="ResultTests\WhenMapping.cs" />
-    <Compile Include="ResultTests\WhenMatching.cs" />
-    <Compile Include="ResultTests\WhenPerformingAnAction.cs" />
-    <Compile Include="ResultTests\WhenWrapping.cs" />
+    <ProjectReference Include="..\Optionally\Optionally.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Optionally\Optionally.csproj">
-      <Project>{dc3d7619-46a9-458b-a1e8-ed16e6771492}</Project>
-      <Name>Optionally</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
 </Project>
